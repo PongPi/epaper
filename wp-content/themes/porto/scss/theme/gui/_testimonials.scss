@@ -1,0 +1,208 @@
+/* Testimonials */
+blockquote.testimonial {
+    border-radius: $border-strong;
+    border: 0;
+    font-family: Georgia, serif;
+    font-style: italic;
+    margin: 0;
+    padding: 10px 50px;
+    position: relative;
+    &:before {
+        @if $rtl == 1 {
+            content: "\201D";
+            right: 10px;
+        } @else {
+            content: "\201C";
+            left: 10px;
+        }
+        top: 0;
+        color: #FFF;
+        font-size: 80px;
+        font-style: normal;
+        line-height: 1;
+        position: absolute;
+    }
+    &:after {
+        color: #FFF;
+        font-size: 80px;
+        font-style: normal;
+        line-height: 1;
+        position: absolute;
+        bottom: -0.5em;
+        @if $rtl == 1 {
+            content: "\201C";
+            left: 10px;
+        } @else {
+            content: "\201D";
+            right: 10px;
+        }
+    }
+    p {
+        color: #FFF;
+        font-family: Georgia, serif;
+        font-style: italic;
+        font-size: 1.2em;
+        line-height: 1.3;
+    }
+}
+
+/* Testimonials Arrow */
+.testimonial-arrow-down {
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 15px solid #CCC;
+    height: 0;
+    @if $rtl == 1 {
+        margin: 0 25px 0 0;
+    } @else {
+        margin: 0 0 0 25px;
+    }
+    width: 0;
+}
+
+/* Testimonials Author */
+.testimonial-author {
+    @if $rtl == 1 {
+        margin: 8px 8px 0 0;
+    } @else {
+        margin: 8px 0 0 8px;
+    }
+    .img-thumbnail {
+        @if $rtl == 1 {
+            float: right;
+            margin-left: 10px;
+        } @else {
+            float: left;
+            margin-right: 10px;
+        }
+        width: auto;
+        img {
+            max-width: 60px;
+            height: auto;
+        }
+    }
+    a {
+        text-decoration: none;
+    }
+    strong {
+        @if $dark == 1 {
+            color: #fff;
+        } @else {
+            color: #111;
+        }
+        display: block;
+        padding-top: 7px;
+    }
+    span {
+        display: block;
+        font-size: 12px;
+    }
+    p {
+        color: #999;
+        @if $rtl == 1 {
+            margin: 0 25px 0 0;
+            text-align: right;
+        } @else {
+            margin: 0 0 0 25px;
+            text-align: left;
+        }
+    }
+}
+
+/* Testimonial Image */
+.testimonial-author-image {
+    display: inline-block;
+    max-width: 60px;
+}
+
+/* Testimonials Carousel */
+blockquote.testimonial-carousel {
+    border: none;
+    font-family: Georgia, serif;
+    font-style: italic;
+    margin: 0;
+    padding: 10px 50px;
+    position: relative;
+
+    &.white {
+        &,
+        * {
+            color: #fff;
+        }
+    }
+
+    &:before {
+        @if $rtl == 1 {
+            content: "\201D";
+            right: 10px;
+        } @else {
+            content: "\201C";
+            left: 10px;
+        }
+        top: 0;
+        font-size: 80px;
+        font-style: normal;
+        line-height: 1;
+        position: absolute;
+    }
+
+    &:after {
+        font-size: 80px;
+        font-style: normal;
+        line-height: 1;
+        position: absolute;
+        bottom: -0.5em;
+        @if $rtl == 1 {
+            content: "\201C";
+            left: 10px;
+        } @else {
+            content: "\201D";
+            right: 10px;
+        }
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    p {
+        margin: 10px 0;
+        font-family: Georgia, serif;
+        font-style: italic;
+        font-size: 1.2em;
+        line-height: 1.3;
+    }
+}
+
+/* Testimonial Simple */
+blockquote.testimonial-simple {
+    border: none;
+    p {
+        font-size: 24px;
+        line-height: 30px;
+    }
+    i.fa-quote-left {
+        font-size: 34px;
+        @if $rtl == 1 {
+            right: -5px;
+        } @else {
+            left: -5px;
+        }
+        position: relative;
+    }
+    a,
+    span {
+        color: #999;
+        font-size: 16px;
+        @if $rtl == 1 {
+            right: -5px;
+        } @else {
+            left: -5px;
+        }
+        line-height: 20px;
+        position: relative;
+    }
+    a {
+        text-decoration: none;
+    }
+}

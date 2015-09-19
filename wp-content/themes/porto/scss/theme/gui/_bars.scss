@@ -1,0 +1,101 @@
+/* Circular Bars */
+.circular-bar {
+    margin-bottom: 25px;
+    .chart {
+        position: relative;
+    }
+    strong {
+        display: block;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 30px;
+        position: absolute;
+        top: 50%;
+        margin-top: -25px;
+        width: 80%;
+        @if $rtl == 1 {
+            right: 10%;
+        } @else {
+            left: 10%;
+        }
+        text-align: center;
+    }
+    label {
+        display: block;
+        font-weight: 100;
+        font-size: 17px;
+        line-height: 20px;
+        position: absolute;
+        top: 50%;
+        width: 80%;
+        @if $rtl == 1 {
+            right: 10%;
+        } @else {
+            left: 10%;
+        }
+        margin-top: 5px;
+        text-align: center;
+    }
+}
+
+/* Progress */
+.vc_progress_bar .vc_single_bar.progress,
+.progress {
+    border-radius: $progress-border;
+    height: 20px;
+    margin-bottom: 20px;
+    @if $dark == 1 {
+        background: $color-dark-4;
+    } @else {
+        background: #FAFAFA;
+    }
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+    overflow: visible;
+}
+.vc_progress_bar .vc_single_bar.progress .vc_bar.progress-bar,
+.progress-bar {
+    @if $rtl == 1 {
+        float: right;
+    } @else {
+        float: left;
+    }
+    background-color: #CCC;
+    box-shadow: none;
+    position: relative;
+    border-radius: $progress-border;
+}
+
+.progress-bar-tooltip {
+    position: absolute;
+    padding: 4px 8px;
+    background-color: #333;
+    color: #FFF;
+    line-height: 15px;
+    font-size: 11px;
+    display: block;
+    position: absolute;
+    top: -28px;
+    @if $rtl == 1 {
+        left: 5px;
+    } @else {
+        right: 5px;
+    }
+    border-radius: $border-thin;
+    filter: alpha(opacity = 0);
+    opacity: 0;
+    &:after {
+        border-color: #333 transparent;
+        border-style: solid;
+        border-width: 5px 5px 0 5px;
+        bottom: -5px;
+        content: "";
+        display: block;
+        @if $rtl == 1 {
+            right: 13px;
+        } @else {
+            left: 13px;
+        }
+        position: absolute;
+        width: 0;
+    }
+}

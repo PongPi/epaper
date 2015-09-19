@@ -1,0 +1,30 @@
+/* Accordion */
+.panel-group {
+    .panel-heading {
+        padding: 0;
+        border-radius: $border-thin;
+        a {
+            display: block;
+            padding: 10px 15px;
+            &:hover, &:focus {
+                text-decoration: none;
+            }
+            [class^="icon-"] {
+                @if $rtl == 1 {
+                    margin-left: 4px;
+                } @else {
+                    margin-right: 4px;
+                }
+                position: relative;
+                top: 1px;
+            }
+        }
+    }
+    &.secondary {
+        .panel-heading {
+            a {
+                color: #FFF;
+            }
+        }
+    }
+}

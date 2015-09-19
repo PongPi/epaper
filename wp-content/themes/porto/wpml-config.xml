@@ -1,0 +1,30 @@
+<wpml-config>
+    <admin-texts>
+        <key name="porto_settings">
+            <key name="welcome-msg" />
+            <key name="header-copyright" />
+            <key name="menu-sidebar-title" />
+            <key name="menu-title" />
+            <key name="footer-ribbon" />
+            <key name="blog-title" />
+            <key name="portfolio-title" />
+            <key name="member-title" />
+            <key name="faq-title" />
+            <key name="product-tab-title" />
+            <key name="header-contact-info" />
+            <key name="footer-copyright" />
+            <key name="menu-block" />
+        </key>
+    </admin-texts>
+    <custom-fields>
+        <custom-field action="translate">member_firstname</custom-field>
+        <custom-field action="translate">member_lastname</custom-field>
+        <custom-field action="translate">member_role</custom-field>
+        <custom-field action="translate">member_overview</custom-field>
+        <custom-field action="translate">portfolio_client</custom-field>
+        <custom-field action="translate">custom_tab_title1</custom-field>
+        <custom-field action="translate">custom_tab_title2</custom-field>
+        <custom-field action="translate">custom_tab_content1</custom-field>
+        <custom-field action="translate">custom_tab_content2</custom-field>
+    </custom-fields>
+</wpml-config>

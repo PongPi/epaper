@@ -1,0 +1,151 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Porto Content Types\n"
+"POT-Creation-Date: 2015-04-14 18:26+0800\n"
+"PO-Revision-Date: 2015-04-14 18:26+0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.5\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: porto-content-types.php:41
+msgid "Block"
+msgstr ""
+
+#: porto-content-types.php:41
+msgid "Blocks"
+msgstr ""
+
+#: porto-content-types.php:57
+msgid "Portfolio"
+msgstr ""
+
+#: porto-content-types.php:57
+msgid "Portfolios"
+msgstr ""
+
+#: porto-content-types.php:73
+msgid "Portfolio Category"
+msgstr ""
+
+#: porto-content-types.php:73
+msgid "Portfolio Categories"
+msgstr ""
+
+#: porto-content-types.php:85
+msgid "Portfolio Skill"
+msgstr ""
+
+#: porto-content-types.php:85
+msgid "Portfolio Skills"
+msgstr ""
+
+#: porto-content-types.php:97
+msgid "FAQ"
+msgstr ""
+
+#: porto-content-types.php:97
+msgid "FAQs"
+msgstr ""
+
+#: porto-content-types.php:113
+msgid "FAQ Category"
+msgstr ""
+
+#: porto-content-types.php:113
+msgid "FAQ Categories"
+msgstr ""
+
+#: porto-content-types.php:125
+msgid "Member"
+msgstr ""
+
+#: porto-content-types.php:125
+msgid "Members"
+msgstr ""
+
+#: porto-content-types.php:141
+msgid "Member Category"
+msgstr ""
+
+#: porto-content-types.php:141
+msgid "Member Categories"
+msgstr ""
+
+#: porto-content-types.php:161
+msgid "Add New"
+msgstr ""
+
+#: porto-content-types.php:162 porto-content-types.php:184
+#, php-format
+msgid "Add New %s"
+msgstr ""
+
+#: porto-content-types.php:163
+#, php-format
+msgid "Edit %s"
+msgstr ""
+
+#: porto-content-types.php:164
+#, php-format
+msgid "New %s"
+msgstr ""
+
+#: porto-content-types.php:165
+#, php-format
+msgid "View %s"
+msgstr ""
+
+#: porto-content-types.php:166 porto-content-types.php:178
+#, php-format
+msgid "Search %s"
+msgstr ""
+
+#: porto-content-types.php:167
+#, php-format
+msgid "No %s found"
+msgstr ""
+
+#: porto-content-types.php:168
+#, php-format
+msgid "No %s found in Trash"
+msgstr ""
+
+#: porto-content-types.php:179
+#, php-format
+msgid "All %s"
+msgstr ""
+
+#: porto-content-types.php:180
+#, php-format
+msgid "Parent %s"
+msgstr ""
+
+#: porto-content-types.php:181
+#, php-format
+msgid "Parent %s:"
+msgstr ""
+
+#: porto-content-types.php:182
+msgid "Edit %"
+msgstr ""
+
+#: porto-content-types.php:183
+#, php-format
+msgid "Update %s"
+msgstr ""
+
+#: porto-content-types.php:185
+#, php-format
+msgid "New %s Name"
+msgstr ""

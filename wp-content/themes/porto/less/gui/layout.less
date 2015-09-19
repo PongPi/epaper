@@ -1,0 +1,67 @@
+
+body {
+    font-family: @body_font_family;
+    font-weight: @body_font_weight;
+    font-size: @body_font_size;
+    line-height: @body_line_height;
+    color: @body_color;
+    background-color: @body_bg_color;
+    background-repeat: @body_bg_repeat;
+    background-size: @body_bg_size;
+    background-attachment: @body_bg_attachment;
+    background-position: @body_bg_position;
+    background-image: @body_bg_image;
+    .gradient(@body_bg_from, @body_bg_to, @body_bg_gradient);
+}
+
+p {
+    //color: @body_color;
+}
+
+.alternative-font {
+    font-family: @alt_font_family;
+    font-weight: @alt_font_weight;
+}
+
+#banner-wrapper.container {
+    .containerBoxedWidth();
+    .calcContainerWidth(@calc_banner_width);
+}
+
+#main {
+    > .container {
+        .calcContainerWidth(@calc_content_width);
+    }
+}
+
+#main.wide,
+#main.column2-wide-left-sidebar,
+#main.column2-wide-right-sidebar,
+#main > .container {
+    background-color: @content_bg_color;
+    background-repeat: @content_bg_repeat;
+    background-size: @content_bg_size;
+    background-attachment: @content_bg_attachment;
+    background-position: @content_bg_position;
+    background-image: @content_bg_image;
+    .gradient(@content_bg_from, @content_bg_to, @content_bg_gradient);
+}
+
+body.boxed {
+
+    .page-wrapper {
+        .containerBoxedWidth();
+    }
+}
+
+
+.calcContentBottomPadding(@c) when not (@c = 1) {
+
+}
+.calcContentBottomPadding(@c) when (@c = 1) {
+    padding-top: 40px;
+}
+
+.content-bottom-wrapper {
+    .calcContentBottomPadding(@calc_content_bottom);
+}

@@ -1,0 +1,29 @@
+// Testimonial
+blockquote.testimonial {
+    color: darken(@body_color, 6.67%);
+    background: lighten(@skinColor, 5%);
+}
+
+.testimonial-arrow-down {
+    border-top-color: lighten(@skinColor, 5%);
+}
+
+blockquote.testimonial-simple {
+    i {
+        color: @skinColor;
+    }
+}
+
+.testimonial-author {
+    span {
+        color: darken(@body_color, 6.67%);
+    }
+    &.white {
+        strong,
+        span,
+        p,
+        a {
+            color: @body_color;
+        }
+    }
+}

@@ -1,0 +1,122 @@
+// =============================================================================
+// TYPOGRAPHY
+// =============================================================================
+$font-primary: "Open Sans", Arial, sans-serif;
+$font-secondary: "Shadows Into Light", cursive;
+$body-font-size: 14px;
+$root-font-size: 14px;
+$body-line-height: 22px;
+
+// weights
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-extrabold: 800;
+
+// spacement
+$spacement-increment: 5px;
+$spacement-xs: $spacement-increment;
+$spacement-sm: $spacement-xs + $spacement-increment;
+$spacement-md: $spacement-sm + $spacement-increment;
+$spacement-lg: $spacement-md + $spacement-increment;
+$spacement-xl: $spacement-lg + $spacement-increment;
+$spacement-xlg: $spacement-xl + $spacement-increment;
+
+// =============================================================================
+// COLORS
+// =============================================================================
+$color-arrow-hover: #fff;
+$color-white: #fff;
+$color-old-price: #a7a7a7;
+$color-black: #000;
+
+$hot-bg: #62b959;
+$sale-bg: #e27c7c;
+
+// Light Version
+$light-bg: #FFF;
+
+// =============================================================================
+// TRANSITION
+// =============================================================================
+$transition: all 0.25s ease 0s;
+//$image-transition: all 0.25s ease-out 0s;
+$image-transition: opacity 0.3s ease-in-out 0s;
+$btn-transition: opacity 0.6s ease-in-out 0s;
+
+// =============================================================================
+// Screen Sizes
+// =============================================================================
+$screen-normal: "(max-width: 991px)";
+$screen-medium: "(max-width: 767px)";
+$screen-small: "(max-width: 480px)";
+
+// =============================================================================
+// Box Shadows
+// =============================================================================
+$wrapper-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
+$menu-wide-box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+$menu-narrow-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
+$sidebarmenu-wide-box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+$sidebarmenu-narrow-box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);
+
+$form-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.04);
+$table-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.04);
+
+// =============================================================================
+// Mixins
+// =============================================================================
+@mixin opacity($opacity) {
+    opacity: $opacity;
+    // IE8 filter
+    $opacity_ie: ($opacity * 100);
+    filter: #{alpha(opacity=$opacity_ie)};
+}
+
+// Button variants
+// -------------------------
+// Easily pump out default styles, as well as :hover, :focus, :active,
+// and disabled options for all buttons
+@mixin button-variant($color, $background, $border) {
+    color: $color;
+    background-color: $background;
+    border-color: $border;
+
+    &:hover,
+    &:focus,
+    &.focus,
+    &:active,
+    &.active,
+    .open > &.dropdown-toggle {
+        color: $color;
+        background-color: lighten($background, 5%);
+        border-color: lighten($border, 5%);
+    }
+    &:active,
+    &.active,
+    .open > &.dropdown-toggle {
+        background-image: none;
+    }
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] & {
+        &,
+        &:hover,
+        &:focus,
+        &.focus,
+        &:active,
+        &.active {
+            background-color: $background;
+            border-color: $border;
+        }
+    }
+
+    .badge {
+        color: $background;
+        background-color: $color;
+    }
+}
+
+@import "fontawesome_variables";
+@import "elusive_icons_variables";

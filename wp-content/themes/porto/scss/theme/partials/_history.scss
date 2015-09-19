@@ -1,0 +1,76 @@
+/* History */
+.porto-history {
+    margin: 25px 0;
+    padding: 0;
+    clear: both;
+    h4 {
+        margin: 0 0 -27px 0;
+        padding: 0;
+    }
+    p {
+        @if $rtl == 1 {
+            margin-right: 53px;
+        } @else {
+            margin-left: 53px;
+        }
+    }
+    .thumb {
+        @if $dark == 1 {
+            @if $rtl == 1 {
+                background: transparent url(../images/history-thumb-dark.png) no-repeat 0 -200px;
+            } @else {
+                background: transparent url(../images/history-thumb-dark.png) no-repeat 0 0;
+            }
+        } @else {
+            @if $rtl == 1 {
+                background: transparent url(../images/history-thumb.png) no-repeat 0 -200px;
+            } @else {
+                background: transparent url(../images/history-thumb.png) no-repeat 0 0;
+            }
+        }
+        width: 227px;
+        height: 160px;
+        margin: 0 0 30px;
+        padding: 0;
+        @if $rtl == 1 {
+            float: right;
+        } @else {
+            float: left;
+        }
+        img {
+            border-radius: 150px;
+            margin: 7px 8px;
+            width: 145px;
+            height: 145px;
+        }
+    }
+    .featured-box {
+        @if $rtl == 1 {
+            text-align: right;
+            margin-right: 225px;
+        } @else {
+            text-align: left;
+            margin-left: 225px;
+        }
+        margin-bottom: 50px;
+        min-height: 115px;
+    }
+}
+
+/* Responsive */
+@media (max-width: 650px) {
+
+    .porto-history {
+        .thumb {
+            display: none;
+        }
+        .featured-box {
+            @if $rtl == 1 {
+                margin-right: 0;
+            } @else {
+                margin-left: 0;
+            }
+        }
+    }
+
+}

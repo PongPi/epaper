@@ -1,0 +1,17 @@
+
+
+.address {
+    .featured-box {
+        @if $rtl == 1 {
+            text-align: right;
+        } @else {
+            text-align: left;
+        }
+    }
+}
+
+#rememberme,
+.back-login {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

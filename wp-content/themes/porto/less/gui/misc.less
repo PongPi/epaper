@@ -1,0 +1,147 @@
+
+// Lists
+ul {
+    &.list {
+        li {
+        }
+        &.icons li {
+            a {
+                color: @body_color;
+            }
+
+            i,
+            a:hover {
+                color: @skinColor;
+            }
+        }
+    }
+}
+
+ul[class^="wsp-"] {
+    li {
+        &:before {
+            color: @skinColor;
+        }
+    }
+}
+
+// Nav
+ul.nav-pills > li.active > a {
+    background-color: @skinColor;
+    &:hover, &:focus {
+        background-color: @skinColor;
+    }
+}
+
+// Panel
+.panel-group {
+    .panel-heading a {
+        color: @skinColor;
+    }
+    &.secondary {
+        .panel-heading {
+            background-color: @skinColor !important;
+        }
+    }
+}
+
+// Toggle
+section.toggle {
+    label {
+        color: @skinColor;
+        .toggleLaberlBorder() when (@rtl = 1) {
+            border-right-color: @skinColor;
+        }
+        .toggleLaberlBorder() when not (@rtl = 1) {
+            border-left-color: @skinColor;
+        }
+        .toggleLaberlBorder;
+    }
+    &.active > label {
+        background-color: @skinColor;
+        border-color: @skinColor;
+        color: #FFF;
+    }
+}
+
+// Image Zoom
+div.wpb_single_image {
+    .porto-vc-zoom {
+        .zoom-icon {
+            background-color: @skinColor;
+            &:hover {
+                background-color: lighten(@skinColor, 5%);
+            }
+        }
+    }
+}
+
+// Featured Box
+.featured-box {
+    i.icon-featured {
+        background-color: @skinColor;
+    }
+    h2,
+    h3,
+    h4,
+    .aio-icon-header h3.aio-icon-title {
+        color: @skinColor;
+    }
+    .box-content {
+        border-top-color: @skinColor;
+    }
+}
+
+.thumbnail,
+.img-thumbnail {
+    .zoom,
+    .link {
+        background-color: @skinColor;
+        &:hover {
+            background-color: lighten(@skinColor, 5%);
+        }
+    }
+}
+
+/* Labels */
+.label-primary {
+    background-color: @skinColor;
+}
+
+/* Circle Slider */
+.porto-concept strong {
+    color: @skinColor;
+    font-family: @alt_font_family;
+}
+.fc-slideshow nav .fc-left i,
+.fc-slideshow nav .fc-right i {
+    color: @skinColor;
+}
+
+
+/* Home Partials */
+.home-intro {
+    .get-started {
+        a:not(.btn) {
+            color: @body_color;
+        }
+    }
+    p {
+        em {
+            font-family: @alt_font_family;
+            color: @skinColor;
+        }
+    }
+    &.light {
+        p {
+            color: @skinColor;
+        }
+    }
+}
+
+/* Page 404 */
+.page-not-found {
+    h4 {
+        color: @body_color;
+    }
+}

@@ -1,0 +1,15 @@
+/* Boxed Layout */
+
+body.boxed {
+
+    .page-wrapper {
+        margin: 25px auto;
+        box-shadow: $wrapper-shadow;
+
+        @media #{$screen-normal} {
+            width: 100% !important;
+            margin: 0 auto;
+            border-width: 0;
+        }
+    }
+}
