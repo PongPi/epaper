@@ -19,10 +19,10 @@
 define('DB_NAME', 'epaper');
 
 /** MySQL database username */
-define('DB_USER', 'epaper');
+define('DB_USER', 'root');
 
 /** MySQL database password */
-define('DB_PASSWORD', '863TGA;55x1 C1z');
+define('DB_PASSWORD', '');
 
 /** MySQL hostname */
 define('DB_HOST', 'localhost');
