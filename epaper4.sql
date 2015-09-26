@@ -176,8 +176,8 @@ CREATE TABLE IF NOT EXISTS `ep_options` (
 --
 
 INSERT INTO `ep_options` (`option_id`, `option_name`, `option_value`, `autoload`) VALUES
-(1, 'siteurl', 'http://localhost/epaper', 'yes'),
-(2, 'home', 'http://localhost/epaper', 'yes'),
+(1, 'siteurl', 'http://epaper-iscclub.rhcloud.com/', 'yes'),
+(2, 'home', 'http://epaper-iscclub.rhcloud.com/', 'yes'),
 (3, 'blogname', 'ePaper', 'yes'),
 (4, 'blogdescription', 'Trung tâm học liệu số NXB ĐHQG-HCM', 'yes'),
 (5, 'users_can_register', '0', 'yes'),
@@ -8420,7 +8420,7 @@ CREATE TABLE IF NOT EXISTS `ep_user_download` (
   `id_user` int(11) NOT NULL,
   `id_product` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `name_product` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `downloadDate` datetime DEFAULT CURRENT_TIMESTAMP
+  `downloadDate` timestamp DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --

@@ -39,7 +39,7 @@ function wc_create_table_download()
       id_user int(11) NOT NULL,
       id_product varchar(255) NOT NULL,
       name_product varchar(255) NOT NULL,
-      downloadDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+      downloadDate timestamp DEFAULT CURRENT_TIMESTAMP,
       UNIQUE KEY id (id)
     );";
 
