@@ -30,37 +30,33 @@ function wc_create_button_dowload()
 
 				$linkFile = get_post_meta( $product->id, '_link_download', true );
 				$attachments = array( WP_CONTENT_DIR . '/uploads/woocommerce_uploads/2015/07/1.-RA-CAN-BAI-30-NHU-CAU-tr-1-42.pdf' );
-				$headers = '';//'From: EPAPER <epaper@epaper.com>' . "\r\n";
-				//wp_mail( $email, 'FILE YOU DOWNLOAD', 'THANK FOR YOU DOWNLOAD', $headers, $attachments );
-
-
-				$sent_message = wp_mail( "nguyenduc1222@gmail.com", "FILE YOU DOWNLOAD", "THANK FOR YOU DOWNLOAD", $headers, $attachments );
+				$headers = 'From: EPAPER <epaper@epaper.com>' . "\r\n";
+				wp_mail( $email, 'EPAPER - FILE YOU DOWNLOAD', 'EPAPER - THANK FOR YOU DOWNLOAD', $headers, $attachments );
 
 				//display message based on the result.
 				if ( $sent_message ) {
 				    // The message was sent.
 
-				    echo "<h2> File đã được gửi đến mail của bạn. <br>Vui lòng kiểm tra hòm thư SPAM</h2>";
+				    echo "<h3> File đã được gửi đến mail của bạn. <br>Vui lòng kiểm tra hòm thư SPAM</h3>";
+
 				} else {
 				    // The message was not sent.
-				    echo '<h2> Xin vui lòng nhấn download lại hoặc đăng nhập</h2';
+				    echo '<h3> Xin vui lòng nhấn download lại hoặc đăng nhập</h3>';
 				}
 
 			} else {
-				 echo '<h2>Xin vui lòng nạp thêm tiền vài tài khoản.</h2';
+				 echo '<h3>Xin vui lòng nạp thêm tiền vài tài khoản.</h3>';
 			}
 		}
 	}
 	else
 	{
-	
-		echo '<a class="btn btn-success disabled" href="#" role="button">DOWNLOAD</a>';
+		echo '<a class="btn btn-success" href="'.get_permalink(2790).'" role="button">DOWNLOAD</a>';
 	}
 }
 	
 function wc_html_button_dowbload()
 {
-
 	?>
 	<a class="btn btn-success" style="margin-bottom: 15px;" href="<?php echo get_permalink();?>?download=true" role="button">DOWNLOAD</a>
 	<?php
@@ -126,7 +122,7 @@ function wc_update_user_detail($myMoney,$user_id)
 		array( 
 			'myMoney' => $myMoney ,	
 		), 
-		array( 'user_id' => $user_id ), 
+		array( 'id_user' => $user_id ), 
 		array( 
 			'%d',	
 		), 

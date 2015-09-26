@@ -81,12 +81,10 @@ add_action('admin_menu','wc_create_menu');
 function wc_create_menu()
 {
 	//vị trị display_init là gọi hàm
-	add_menu_page('Manager Customer','Quản lý khách hàng','manage_options','manager-customer','display_init','dashicons-admin-network');
+	add_menu_page('Manager Customer','Quản lý khách hàng','manage_options','manager-customer','display_menu','dashicons-admin-network');
 	
-	add_submenu_page( 'manager-customer', 'Thêm mới', 'Thêm mới', 'manage_options', 'create-table-2', 'my_create_user');
+	add_submenu_page( 'manager-customer', 'Danh sách tải', 'Danh sách tải', 'manage_options', 'create-table-2', 'display_init');
 
-	//vị trị display_menu là gọi hàm 
-    add_submenu_page( 'manager-customer', 'Danh sách', 'Danh sách', 'manage_options', 'create-table-1', 'display_menu');
 }
 
 // Hàm gọi hiển thị menu name "Danh sach" va "Thêm mới"
@@ -94,42 +92,41 @@ function display_menu()
 {
 	echo 'Danh sách Khách Hàng';
 	//Hàm xuất dữ liệu từ table users
-	get_table_user();
+	//get_table_user();
+
+  tt_render_list_page();
 	
 }
 //Hàm gọi hiển thị cho menu name "Quản lý khách hàng"
 function display_init()
 {
-	// Gọi hàm hiển thị form đk
-    get_table_user();
-	//html_form_register();
-	// Gọi hàm chức năng insert vào data base
-	//insert_data();
+    render_list_table_dowload();
+
 }
 function my_create_user()
 {
-    html_form_register();
+    //html_form_register();
     // Gọi hàm chức năng insert vào data base
     insert_data();
 }
-//Hàm tạo form đăng ký
-function html_form_register()
-{
-	echo '<form action="' . esc_url( $_SERVER['REQUEST_URI'] ) . '" method="post">';
+// //Hàm tạo form đăng ký
+// function html_form_register()
+// {
+// 	echo '<form action="' . esc_url( $_SERVER['REQUEST_URI'] ) . '" method="post">';
 
-        echo '<p>';
-        echo 'ID (required) <br />';
-        echo '<input type="text" name="wc-id" size="40" />';
-        echo '</p>';
+//         echo '<p>';
+//         echo 'ID (required) <br />';
+//         echo '<input type="text" name="wc-id" size="40" />';
+//         echo '</p>';
 
-        echo '<p>';
-        echo 'Engine (required) <br />';
-        echo '<input type="text" name="wc-name" size="40" />';
-        echo '</p>';
+//         echo '<p>';
+//         echo 'Engine (required) <br />';
+//         echo '<input type="text" name="wc-name" size="40" />';
+//         echo '</p>';
 
-        echo '<p><input type="submit" name="wc-submit" value="Add"/></p>';
-        echo '</form>';
-}
+//         echo '<p><input type="submit" name="wc-submit" value="Add"/></p>';
+//         echo '</form>';
+// }
 function detail_user($id){
     echo 'day laf thong tin user';
 }
@@ -296,42 +293,60 @@ function get_detail_user(){
     if ( 0 == $current_user->ID ) {
         // Not logged in.
         // Chuyển trang login
-        wc_login_form();
+        echo "LOGIN";
     } else {
         // Logged in.
+        global $wpdb;
+
+        //$table_name = $wpdb->prefix.'users';
+        $table_name_download = $wpdb->prefix.'user_download';
+
+        $products = $wpdb->get_results("SELECT * FROM ".$table_name_download." where id_user = ".$current_user->ID);
+
+        $detailUser = wc_get_infor_user_detail($current_user->ID)[0];
+        setlocale(LC_MONETARY, 'vi_VND');
 
         ?>
         <br>
-        <div class="form-horizontal" style="border: solid 1px;border-radius: 5px;">
+        <div id="user-info">
+
+        <div class="col-sm-3">
+          <a target="_blank" href="https://www.nganluong.vn/button_payment.php?receiver=nguyenduc1222@gmail.com&product_name=<?php echo $current_user->user_email; ?>&price=50000&return_url=http://localhost/epaper/my-account/&comments=" ><img src="https://www.nganluong.vn/data/images/buttons/12.gif"  border="0" /></a> 
+        </div>
+
+        <div class="form-horizontal col-sm-9" style="border: solid 1px;border-radius: 2px;padding:10px;">
+          <h3>THÔNG TIN TÀI KHOẢN <small><code><?php echo $current_user->user_email ?></code></small></h3>
           <div class="form-group">
             <label class="col-sm-2 control-label">Name</label>
             <div class="col-sm-10">
-              <p class="form-control-static"><?php echo $current_user->user_login ?></p>
-              <a href="<?php echo wp_logout_url( $logout_redirect_page ); ?>" title="<?php _e('Logout','lwa');?>">Thoát</a>
+              <p class="form-control-static"><code><?php echo $current_user->user_login ?></code></p>
+              <a class="btn btn-danger" href="<?php echo wp_logout_url( $logout_redirect_page ); ?>" title="<?php _e('Logout','lwa');?>">Thoát</a>
+                -  <a  class="btn btn-info"  href="<?php echo wc_customer_edit_account_url(); ?>" title="<?php _e('Logout','lwa');?>">Chỉnh sửa</a>
             </div>
           </div>
 
           <div class="form-group">
             <label class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
-              <p class="form-control-static"><?php echo $current_user->user_email ?></p>
+              <p class="form-control-static"><code><?php echo $current_user->user_email; ?></code></p>
             </div>
           </div>
 
           <div class="form-group">
             <label class="col-sm-2 control-label">Tiền</label>
             <div class="col-sm-10">
-              <p class="form-control-static">25.000 VND</p>
+              <p class="form-control-static"><code><?php echo number_format($detailUser->myMoney, 0, ',', '.');?> VND</code></p>
             </div>
           </div>
 
           <div class="form-group">
             <label class="col-sm-2 control-label">Số tài liệu đã tải</label>
             <div class="col-sm-10">
-              <p class="form-control-static">23 lượt</p>
+              <p class="form-control-static"><code><?php echo sizeof($products); ?> lượt</code></p>
             </div>
           </div>
         </div>
+        
 
         <div class="row">
             <div class="main-content col-md-12">
@@ -345,24 +360,20 @@ function get_detail_user(){
                   </thead>
                   <tbody>
                     <?php
-                    global $wpdb;
-
-                    //$table_name = $wpdb->prefix.'users';
-                    $table_name_download = $wpdb->prefix.'user_download';
-
-                    $results = $wpdb->get_results("SELECT * FROM ".$table_name_download." where id_user = ".$current_user->ID);
-
-                    foreach ($results as $result)
+                    $i = 1;
+                    foreach ($products as $product)
                     {
 
                     ?>
                     <tr>
-                      <th scope="row">1</th>
-                      <td><?php echo $results->name_product; ?></td>
-                      <td><?php echo $results->downloadDate; ?></td>
+                      <th scope="row"><?php echo $i; ?></th>
+                      <td><a href="<?php echo post_permalink($product->id_product); ?>"><?php echo $product->name_product; ?></a></td>
+                      <td><?php echo $product->downloadDate; ?></td>
                     </tr>
 
                     <?php 
+                    $i ++;
+
                     }
                     ?>
 
@@ -372,112 +383,18 @@ function get_detail_user(){
 
             
         </div>
+
+
+        </div>
         <?php
 
     }
 }
 
-function wc_login_form(){
-
-    global $post;
-     extract( shortcode_atts( array(
-          'title' => '',
-     ), $atts ) );
-     
-    //ob_start();
-
-
-
-
-    if(!session_id()){
-            @session_start();
-        }
-        global $post;
-        $redirect_page = get_option('home');
-        $redirect_page_url = get_option('home');
-        $logout_redirect_page = get_option('home');
-        $link_in_username = get_option('home');
-        
-        if($redirect_page_url){
-            $redirect = $redirect_page_url;
-        } else {
-            if($redirect_page){
-                $redirect = get_permalink($redirect_page);
-            } else {
-                $redirect = $this->curPageURL();
-            }
-        }
-        
-        if($logout_redirect_page){
-            $logout_redirect_page = get_permalink($logout_redirect_page);
-        } else {
-            $logout_redirect_page = $this->curPageURL();
-        }
-        
-        
-        ?>
-        <div id="log_forms">
-
-        <form name="login" id="login" method="post" action="">
-          <div class="form-group">
-            <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
-            <div class="col-sm-10">
-              <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-            <div class="col-sm-10">
-              <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox"> Remember me
-                </label>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-              <button type="submit" class="btn btn-default">Sign in</button>
-            </div>
-          </div>
-        </form>
-        </div>
-        
-
-        <div id="log_forms">
-        <form name="login" id="login" method="post" action="">
-        <input type="hidden" name="option" value="afo_user_login" />
-        <input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
-        <div class="form-group">
-            <label for="username"><?php _e('Username','lwa');?> </label>
-            <input type="text" name="user_username" required="required"/>
-        </div>
-        <div class="form-group">
-            <label for="password"><?php _e('Password','lwa');?> </label>
-            <input type="password" name="user_password" required="required"/>
-        </div>
-        
-        <div class="form-group"><label for="login">&nbsp;</label><input name="login" type="submit" value="<?php _e('Login','lwa');?>" /></div>
-        
-        </form>
-        </div>
-        <?php 
-        
-    //$ret = ob_get_contents();   
-    //ob_end_clean();
-    //return $ret;
-
-}
 //Tạo short code danh user cho plugin 
 //Vị trí đầu tiên là tên shortcode wc_list_user
 //get_table_user là gọi dến hàm.(Viết hàm mới thay thế để hiển thị khác đừng sửa trong này)
 // Cách sử dụng: copy [wc_list_user] vào một nội dung của một post(bài viết)
-add_shortcode( 'wc_login', 'wc_login_form' );
 add_shortcode( 'wc_list_user', 'get_table_user');
 add_shortcode( 'wc_detail_user', 'get_detail_user');
 
@@ -496,6 +413,7 @@ if(!is_admin())
 else
 {
 	require WC_SETTING_PLUGIN_INCLUDES_DIR.'includes/backend.php';
+  require WC_SETTING_PLUGIN_INCLUDES_DIR.'includes/list_table_download.php';
 }
 
 ?>

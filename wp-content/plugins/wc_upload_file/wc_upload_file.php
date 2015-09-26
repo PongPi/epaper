@@ -50,10 +50,4 @@ function my_media_lib_uploader_enqueue()
 
 add_action('admin_print_scripts', 'my_media_lib_uploader_enqueue');
 add_action('admin_enqueue_scripts', 'my_media_lib_uploader_enqueue');
-
-function wc_save($post_id)
-{
-    
-}
-
 ?>

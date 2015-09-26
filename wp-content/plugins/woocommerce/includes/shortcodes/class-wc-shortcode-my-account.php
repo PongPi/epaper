@@ -73,6 +73,7 @@ class WC_Shortcode_My_Account {
 			} else {
 
 				self::my_account( $atts );
+				//echo "<script>window.history.back();</script>";
 
 			}
 		}
@@ -84,14 +85,14 @@ class WC_Shortcode_My_Account {
 	 * @param  array $atts
 	 */
 	private static function my_account( $atts ) {
-		extract( shortcode_atts( array(
-	    	'order_count' => 15
-		), $atts ) );
+		// extract( shortcode_atts( array(
+	 	// 	   	'order_count' => 15
+		// ), $atts ) );
 
-		wc_get_template( 'myaccount/my-account.php', array(
-			'current_user' 	=> get_user_by( 'id', get_current_user_id() ),
-			'order_count' 	=> 'all' == $order_count ? -1 : $order_count
-		) );
+		// wc_get_template( 'myaccount/my-account.php', array(
+		// 	'current_user' 	=> get_user_by( 'id', get_current_user_id() ),
+		// 	'order_count' 	=> 'all' == $order_count ? -1 : $order_count
+		// ) );
 	}
 
 	/**
@@ -124,6 +125,7 @@ class WC_Shortcode_My_Account {
 	 * Edit account details page
 	 */
 	private static function edit_account() {
+		echo "<style>#user-info{display:none;}</style>";
 		wc_get_template( 'myaccount/form-edit-account.php', array( 'user' => get_user_by( 'id', get_current_user_id() ) ) );
 	}
 
