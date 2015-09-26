@@ -23,11 +23,11 @@ function wc_create_button_dowload()
 		{	
 			
 			$linkFile = get_post_meta( $product->id, '_link_download', true );
-			$arr = explode("uploads", $linkFile);
+			$arr = explode("/uploads", $linkFile);
 
-			if(isset($linkFile) || sizeof($arr) > 1){
+			if(isset($linkFile) && sizeof($arr) > 1){
 				$dirFile = $arr[1];
-				if(file_exists($dirFile)){
+				if(file_exists(WP_CONTENT_DIR .'/uploads'.$dirFile)){
 					$attachments = array( WP_CONTENT_DIR .'/uploads'.$dirFile );
 
 					if(check_user())
@@ -38,25 +38,28 @@ function wc_create_button_dowload()
 
 						
 						$headers = 'From: EPAPER <epaper@epaper.com>' . "\r\n";
-						wp_mail( $email, 'EPAPER - FILE YOU DOWNLOAD', 'EPAPER - THANK FOR YOU DOWNLOAD', $headers, $attachments );
+						$name = $product->post->post_title;
+						wp_mail( $email, 'EPAPER - FILE YOU DOWNLOAD', 'EPAPER - THANK FOR YOU DOWNLOAD - '.$name, $headers, $attachments );
 
 						//display message based on the result.
-						if ( $sent_message ) {
-						    // The message was sent.
+						echo "<h3> File đã được gửi đến mail của bạn. <br>Vui lòng kiểm tra hòm thư SPAM</h3>";
+						
+						// if ( $sent_message ) {
+						//     // The message was sent.
 
-						    echo "<h3> File đã được gửi đến mail của bạn. <br>Vui lòng kiểm tra hòm thư SPAM</h3>";
+						//     echo "<h3> File đã được gửi đến mail của bạn. <br>Vui lòng kiểm tra hòm thư SPAM</h3>";
 
-						} else {
-						    // The message was not sent.
-						    echo '<h3> Xin vui lòng nhấn download lại hoặc đăng nhập</h3>';
-						}
+						// } else {
+						//     // The message was not sent.
+						//     echo '<h3> Xin vui lòng nhấn download lại hoặc đăng nhập</h3> ';
+						// }
 
 					} else {
 						 echo '<h3>Xin vui lòng nạp thêm tiền vài tài khoản.</h3>';
 					}
 
 				} else {
-					echo "Lỗi không tìm thấy file PDF";
+					echo "Lỗi không tìm thấy file PDF".WP_CONTENT_DIR .'/uploads'.$dirFile;
 				}
 				
 			} else {
