@@ -21,31 +21,46 @@ function wc_create_button_dowload()
 		
 		if (isset($_GET['download']))
 		{	
-		
-			if(check_user())
-			{
-				
-				$current_user = wp_get_current_user();
-				$email = $current_user->user_email;
+			
+			$linkFile = get_post_meta( $product->id, '_link_download', true );
+			$arr = explode("uploads", $linkFile);
 
-				$linkFile = get_post_meta( $product->id, '_link_download', true );
-				$attachments = array( WP_CONTENT_DIR . '/uploads/woocommerce_uploads/2015/07/1.-RA-CAN-BAI-30-NHU-CAU-tr-1-42.pdf' );
-				$headers = 'From: EPAPER <epaper@epaper.com>' . "\r\n";
-				wp_mail( $email, 'EPAPER - FILE YOU DOWNLOAD', 'EPAPER - THANK FOR YOU DOWNLOAD', $headers, $attachments );
+			if(isset($linkFile) || sizeof($arr) > 1){
+				$dirFile = $arr[1];
+				if(file_exists($dirFile)){
+					$attachments = array( WP_CONTENT_DIR .'/uploads'.$dirFile );
 
-				//display message based on the result.
-				if ( $sent_message ) {
-				    // The message was sent.
+					if(check_user())
+					{
+						
+						$current_user = wp_get_current_user();
+						$email = $current_user->user_email;
 
-				    echo "<h3> File đã được gửi đến mail của bạn. <br>Vui lòng kiểm tra hòm thư SPAM</h3>";
+						
+						$headers = 'From: EPAPER <epaper@epaper.com>' . "\r\n";
+						wp_mail( $email, 'EPAPER - FILE YOU DOWNLOAD', 'EPAPER - THANK FOR YOU DOWNLOAD', $headers, $attachments );
+
+						//display message based on the result.
+						if ( $sent_message ) {
+						    // The message was sent.
+
+						    echo "<h3> File đã được gửi đến mail của bạn. <br>Vui lòng kiểm tra hòm thư SPAM</h3>";
+
+						} else {
+						    // The message was not sent.
+						    echo '<h3> Xin vui lòng nhấn download lại hoặc đăng nhập</h3>';
+						}
+
+					} else {
+						 echo '<h3>Xin vui lòng nạp thêm tiền vài tài khoản.</h3>';
+					}
 
 				} else {
-				    // The message was not sent.
-				    echo '<h3> Xin vui lòng nhấn download lại hoặc đăng nhập</h3>';
+					echo "Lỗi không tìm thấy file PDF";
 				}
-
+				
 			} else {
-				 echo '<h3>Xin vui lòng nạp thêm tiền vài tài khoản.</h3>';
+				echo "Tài liệu này chưa có file PDF";
 			}
 		}
 	}
