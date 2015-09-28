@@ -161,3 +161,4 @@ function wc_add_detail_dowload($user_id,$id_product,$name_product)
     );
 
 }
+?>

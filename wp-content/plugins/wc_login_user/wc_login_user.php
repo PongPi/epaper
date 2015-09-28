@@ -398,7 +398,14 @@ function get_detail_user(){
 add_shortcode( 'wc_list_user', 'get_table_user');
 add_shortcode( 'wc_detail_user', 'get_detail_user');
 
+//Hàm điều hướng sau khi đăng nhập
+function set_reaload_session($user_login){
+    $url = home_url()."/my-account";
+    wp_redirect($url);
+    exit;
+}
 
+add_action('wp_login', 'set_reaload_session');
 
 // Khai báo link file
 define('WC_SETTING_PLUGIN_URL',plugin_dir_url(__FILE__));
