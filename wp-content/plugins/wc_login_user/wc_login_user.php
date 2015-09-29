@@ -82,8 +82,8 @@ function wc_create_menu()
 {
 	//vị trị display_init là gọi hàm
 	add_menu_page('Manager Customer','Quản lý khách hàng','manage_options','manager-customer','display_menu','dashicons-admin-network');
-	
-	add_submenu_page( 'manager-customer', 'Danh sách tải', 'Danh sách tải', 'manage_options', 'create-table-2', 'display_init');
+	add_submenu_page( 'manager-customer', 'Danh sách tải', 'Danh sách tải', 'manage_options', 'epaper-manager-customer', 'display_init');
+  add_submenu_page( 'manager-customer', 'Tuỳ chỉnh',     'Tuỳ chỉnh',     'manage_options', 'epaper-manager-options', 'display_options');
 
 }
 
@@ -101,6 +101,14 @@ function display_menu()
 function display_init()
 {
     render_list_table_dowload();
+
+}
+function display_options()
+{
+    if(isset($_POST['add_money'])){
+      update_option( 'epaper_option_add_money', $_POST['add_money'] );
+    }
+    render_epaper_options();
 
 }
 function my_create_user()
@@ -159,6 +167,28 @@ function insert_data()
         }
     }
 }
+function render_epaper_options()
+    {
+            // Logged in.
+            global $wpdb;
+            $add_money = get_option('epaper_option_add_money');
+            if(!isset($add_money) || $add_money == ''){
+              add_option( 'epaper_option_add_money', '50000', '', 'yes' );
+            }
+            ?>
+            <div class="clearfix"></div>
+            <div class="container wrap">
+                <div class="row">
+                    <div class="col-md-4">
+                <form action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ); ?>" method="post">
+                  <div class="form-group">
+                    <label for="name">Số tiền mỗi lần khách hàng nạp vào</label>
+                    <input type="text" value="<?php echo $add_money; ?>" class="form-control" id="add_money" name="add_money">
+                  </div>
+                  <button type="submit" class="btn btn-success" name="wc-submit">Lưu thông tin</button>
+                </form>
+            <?php
+    }
 function wc_get_infor_user_detail_by_id($user_id)
 {
   global $wpdb;
