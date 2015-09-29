@@ -57,9 +57,10 @@ function wc_add_id_user($user_id)
 	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
     $id = $user_id;
-    $name = $_POST["user_email"];
+
+    $name = $_POST["email"];
     $myMoney = 0;
-    $myEmail = $_POST["user_email"];
+    $myEmail = $_POST["email"];
 
     $table_name = $wpdb->prefix.'user_detail';
 
@@ -430,12 +431,45 @@ add_shortcode( 'wc_detail_user', 'get_detail_user');
 
 //Hàm điều hướng sau khi đăng nhập
 function set_reaload_session($user_login){
-    $url = home_url()."/my-account";
+
+    global $wpdb;
+    $table_name_user = $wpdb->prefix.'users';
+
+    $users = $wpdb->get_results("SELECT * FROM ".$table_name_user." where user_login = '".$user_login."'");
+    if(isset($users[0])){
+      $user = $users[0];
+      //var_dump($user);die;
+      $table_meta_user = $wpdb->prefix.'usermeta';
+      $results = $wpdb->get_results("SELECT meta_value FROM ".$table_meta_user." where user_id = '".$user->ID."' and meta_key = 'ep_user_level'");
+      if($results[0]->meta_value == 0){
+        $url = home_url()."/my-account";
+        wp_redirect($url);
+        exit;
+      } else {
+        $url = home_url()."/wp-admin";
+        wp_redirect($url);
+        exit;
+      }
+    }
+}
+
+function set_reaload_session_register($user_id){
+
+    $user = get_user_by( 'email', trim( $_POST['email'] ));
+    if(isset($user)){
+      if($_POST['ws_plugin__s2member_custom_reg_field_user_pass1'] == $_POST['ws_plugin__s2member_custom_reg_field_user_pass2'] && strlen($_POST['ws_plugin__s2member_custom_reg_field_user_pass1']) > 6 )
+      {
+        reset_password($user, $_POST['ws_plugin__s2member_custom_reg_field_user_pass1']);
+      }
+    }
+    $url = home_url()."/";
     wp_redirect($url);
     exit;
 }
 
 add_action('wp_login', 'set_reaload_session');
+add_action('user_register','set_reaload_session_register');
+
 
 // Khai báo link file
 define('WC_SETTING_PLUGIN_URL',plugin_dir_url(__FILE__));
