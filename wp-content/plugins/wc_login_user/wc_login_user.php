@@ -359,7 +359,7 @@ function get_detail_user(){
           <div class="form-group">
             <label class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
-              <p class="form-control-static"><code><?php echo $current_user->user_email; ?></code></p>
+              <p class="form-control-static"><code><?php echo $detailUser->myEmail; ?></code></p>
             </div>
           </div>
 
