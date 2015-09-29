@@ -311,7 +311,24 @@ function get_detail_user(){
         <div id="user-info">
 
         <div class="col-sm-3">
-          <a target="_blank" href="https://www.nganluong.vn/button_payment.php?receiver=nguyenduc1222@gmail.com&product_name=<?php echo $current_user->user_email; ?>&price=50000&return_url=http://localhost/epaper/my-account/&comments=" ><img src="https://www.nganluong.vn/data/images/buttons/12.gif"  border="0" /></a> 
+          <a target="_blank" href="https://www.nganluong.vn/button_payment.php?receiver=nguyenduc1222@gmail.com&product_name=<?php echo $current_user->user_email; ?>&price=50000&return_url=http://localhost/payment&comments=" ><img src="https://www.nganluong.vn/data/images/buttons/12.gif"  border="0" /></a>
+	  <br></br>
+	  <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+	  <input type="hidden" name="cmd" value="_xclick">
+	  <input type="hidden" name="business" value="huynhok.uit@gmail.com">
+	  <input type="hidden" name="lc" value="VN">
+	  <input type="hidden" name="item_name" value=<?php echo $current_user->user_email; ?>>
+	  <input type="hidden" name="amount" value="6.00">
+	  <input type="hidden" name="currency_code" value="USD">
+	  <input type="hidden" name="button_subtype" value="services">
+	  <input type="hidden" name="no_note" value="0">
+	  <input type="hidden" name="return" value="http://localhost/payment">
+	  <input type="hidden" name="rm" value="2">
+	  <input type="hidden" name="cancel_return" value="http://localhost/my-account">
+	  <input type="hidden" name="bn" value="PP-BuyNowBF:btn_paynowCC_LG.gif:NonHostedGuest">
+	  <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+	  <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+	  </form>
         </div>
 
         <div class="form-horizontal col-sm-9" style="border: solid 1px;border-radius: 2px;padding:10px;">
