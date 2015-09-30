@@ -342,7 +342,20 @@ function get_detail_user(){
         <div id="user-info">
 
         <div class="col-sm-3">
-          <a target="_blank" href="https://www.nganluong.vn/button_payment.php?receiver=nguyenduc1222@gmail.com&product_name=<?php echo $current_user->user_email; ?>&price=50000&return_url=http://localhost/payment&comments=" ><img src="https://www.nganluong.vn/data/images/buttons/12.gif"  border="0" /></a>
+          <form action="https://baokim.vn/payment/product/version11" method="get" target="_blank">
+          <input type="hidden" name="business" value="nhokkho37@gmail.com">
+          <input type="hidden" name="product_name" value="booking">
+          <input type="hidden" name="product_price" value="50000">
+          <input type="hidden" name="product_quantity" value="1">
+          <input type="hidden" name="total_amount" value="50000">
+          <input type="hidden" name="url_detail" value="lab.hoangdoan.io:8080">
+          <input type="hidden" name="url_success" value="http://lab.hoangdoan.io:8080/baokim.php">
+          <input type="hidden" name="url_cancel" value="http://lab.hoangdoan.io:8080/my-account">
+          <input type="hidden" name="order_description" value="">
+          <input type="hidden" name="id" value="">
+          <input type="image" src="http://www.baokim.vn/developers/uploads/baokim_btn/thanhtoan-l.png" border="0" name="submit" alt="Thanh toán an to[0m| n v[0m~[i Bảo Kim !" title="Thanh toán trực tuyến an to[0m| n dùng t[0m| i khoản Ngân h[0m| ng (VietcomBank, Techcoo
+mBank, [0m~Pông [0m~A, VietinBank, Quân [0m~P[0m~Yi, VIB, SHB,... v[0m|  thẻ Qu[0m~Qc tế (Visa, Master Card...) qua C[0m~Ung thanh toán �c tuyến BảoKim.vn"></form>
+
 	  <br></br>
 	  <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
 	  <input type="hidden" name="cmd" value="_xclick">
