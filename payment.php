@@ -1,21 +1,65 @@
 <?php
 
+require_once('./wp-config.php');
 
-function Paypay_return()
+function Paypal_return()
 {
-  $email = $_POST['item_name'];
-  $payment_gross = $_POST['payment_gross'];
-  $mc_currency = $_POST['mc_currency'];
-  if ( (int)$payment_gross != 6 )
+  if(isset($_GET['tx'])) {
+    $transaction_id = $_GET['tx'];
+  }
+
+  $token = "nZhbvhwVV3jpXyU2yj8hD3kIah1XBsNUsYVtvtgKHuvOJ6fFiU26weQ4Ogi";
+  $request = curl_init();
+
+  curl_setopt_array($request, array
+(
+  CURLOPT_URL => 'https://www.sandbox.paypal.com/cgi-bin/webscr',
+  CURLOPT_POST => TRUE,
+  CURLOPT_POSTFIELDS => http_build_query(array
+    (
+      'cmd' => '_notify-synch',
+      'tx' => $transaction_id,
+      'at' => $token,
+    )),
+  CURLOPT_RETURNTRANSFER => TRUE,
+  CURLOPT_HEADER => FALSE,
+));
+
+  $response = curl_exec($request);
+  $status   = curl_getinfo($request, CURLINFO_HTTP_CODE);
+  $response = str_replace(' ',"\n",$response);
+  //echo $response;
+  $lines = explode("\n", $response);
+  if (strcmp ($lines[0], "SUCCESS") != 0)
   {
-    echo '<script> alert("Phát hiện lừa đảo !!!!") && window.location="http://localhost:8080"  </script>';
+    echo "Invalid transaction.";
+    exit();
+  }
+
+  //print_r( $lines);
+  $keyarray = array();
+
+  for ($i=1; $i<count($lines);$i++){
+    list($key,$val) = explode("=", $lines[$i]);
+    $keyarray[urldecode($key)] = urldecode($val);
+  }
+  print_r( $keyarray);
+  //echo $response;
+  //echo $status;
+  //exit();
+  $payment_gross = $keyarray['payment_gross'];
+  $receiver_email = $keyarray['receiver_email'];
+  if ( $payment_gross != "6.00" || $receiver_email != "dthoang92-facilitator@gmail.com")
+  {
+    echo '<script> alert("Phát hiện lừa đảo !!!!") && window.location="htab.hoangdoan.io:8080"  </script>';
     exit();
   }
   $user_id = get_current_user_id();
-  $myMoney = $myMoney + $mc_currency * 22000;
   global $wpdb;
-  $table_name = $wpdb->prefix.'user_detail';
-
+  $table_name = $wpdb->prefix.'user_detail'; 
+  $results = $wpdb->get_results("SELECT * FROM ".$table_name." WHERE id_user = '".$user_id."'");  
+  $myMoney = intval($results[0]->myMoney);
+  $myMoney = $myMoney + (int)$payment_gross * 22000;
   $wpdb->update( 
     $table_name, 
     array( 
@@ -28,61 +72,7 @@ function Paypay_return()
     array( '%s' ) 
     );
 }
- 
-function Nganluong_return()
-{
- 	 //Lấy thông tin giao dịch
-	$transaction_info=$_GET["transaction_info"];
-	//Lấy mã đơn hàng 
-	$order_code=$_GET["order_code"];
-	//Lấy tổng số tiền thanh toán tại ngân lượng 
-	$price=$_GET["price"];
-	//Lấy mã giao dịch thanh toán tại ngân lượng
-	$payment_id=$_GET["payment_id"];
-	//Lấy loại giao dịch tại ngân lượng (1=thanh toán ngay ,2=thanh toán tạm giữ)
-	$payment_type=$_GET["payment_type"];
-	//Lấy thông tin chi tiết về lỗi trong quá trình giao dịch
-	$error_text=$_GET["error_text"];
-	//Lấy mã kiểm tra tính hợp lệ của đầu vào 
-	$secure_code=$_GET["secure_code"];
-	
-	if ( $price != 50000 )
-	{
-	  echo '<script> alert("Phát hiện lừa đảo !!!!") && window.location="http://localhost:8080"  </script>';
-	  exit();
-	}
-	
-	$user_id = get_current_user_id();
-	$myMoney = $myMoney + $price;
-	
-	global $wpdb; 
-	$table_name = $wpdb->prefix.'user_detail';
 
-	$wpdb->update( 
-	$table_name,
-	array( 
-      	'myMoney' => $myMoney ,
-    	),
-    	array( 'id_user' => $user_id ),
-    	array(    
-      	'%d',
-    	),
-    	array( '%s' )
-    	);
-}
-
-	if ( $_SERVER['HTTP_REFERER'] != "paypal.com" && $_SERVER['HTTP_REFERER'] != "nganluong.vn" )
-	{
-	  echo 	"Lỗi xảy ra trong quá trình xác thực";
-	  exit();
-	}
-	elseif ($_SERVER['HTTP_REFERER'] != "paypal.com")
-	{
-	  Paypal_return;
-	}
-	else 
-	{
-	  Nganluong_return;
-	}
+Paypal_return();
 
 ?>
