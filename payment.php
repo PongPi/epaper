@@ -43,10 +43,27 @@ function Paypal_return()
     list($key,$val) = explode("=", $lines[$i]);
     $keyarray[urldecode($key)] = urldecode($val);
   }
-  print_r( $keyarray);
+  //print_r( $keyarray);
   //echo $response;
   //echo $status;
   //exit();
+  $check = file_get_contents("log/paypal_txn.log");
+  if (strpos($check, $transaction_id) !== false) {
+    header("HTTP/1.1 301 Moved Permanently");
+    header("Location: /my-account");
+    exit();
+  }
+  $txn_log = fopen("log/paypal_txn.log", "a") or die ("Can not open log file");
+  fwrite($txn_log, $transaction_id."\n");
+  fclose($txn_log) or die("Can't close log file");
+  $log = fopen("log/paypal.log", "a") or die ("Can not open log file");
+
+  //foreach($keyarray as $payment) {
+    //var_dump($payment);
+  fputcsv($log, $keyarray);
+  //}
+  fclose($log) or die("Can't close log file");
+
   $payment_gross = $keyarray['payment_gross'];
   $receiver_email = $keyarray['receiver_email'];
   if ( $payment_gross != "6.00" || $receiver_email != "dthoang92-facilitator@gmail.com")
@@ -74,5 +91,7 @@ function Paypal_return()
 }
 
 Paypal_return();
-
+header("HTTP/1.1 301 Moved Permanently"); 
+header("Location: /my-account"); 
+exit();
 ?>
