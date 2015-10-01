@@ -11,7 +11,7 @@ foreach ( $_POST as $key => $value ) {
 }
 
 //thuc hien  ghi log cac tin nhan BPN
-$myFile = "logs/baokim.log";
+$myFile = "logs/baokim.log".date("Y-m-d");
 $fh = fopen($myFile, 'a') or die("can't open file");
 fputcsv($fh, $_POST); 
 

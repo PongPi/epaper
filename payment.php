@@ -56,7 +56,7 @@ function Paypal_return()
   $txn_log = fopen("log/paypal_txn.log", "a") or die ("Can not open log file");
   fwrite($txn_log, $transaction_id."\n");
   fclose($txn_log) or die("Can't close log file");
-  $log = fopen("log/paypal.log", "a") or die ("Can not open log file");
+  $log = fopen("log/paypal.log".date("Y-m-d"), "a") or die ("Can not open log file");
 
   //foreach($keyarray as $payment) {
     //var_dump($payment);
