@@ -4,6 +4,12 @@ require_once('./wp-config.php');
 //Baokim Payment Notification (BPN) Sample
 //Lay thong tin tu Baokim POST sang
 
+$req = ''; 
+foreach ( $_POST as $key => $value ) { 
+        $value = urlencode ( stripslashes ( $value ) );
+        $req .= "&$key=$value";
+}
+
 //thuc hien  ghi log cac tin nhan BPN
 $myFile = "logs/baokim.log";
 $fh = fopen($myFile, 'a') or die("can't open file");
