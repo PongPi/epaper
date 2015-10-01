@@ -45,11 +45,12 @@ if($result != '' && strstr($result,'VERIFIED') && $status==200){
 	$customer_name = $_POST['customer_name'];
 	$customer_address = $_POST['customer_address'];
 	$pay_amount = $_POST['net_amount'];
+	$merchant_id = $_POST['merchant_id'];
 	//...
 	
 	//kiem tra trang thai giao dich
 if ($transaction_status == 4||$transaction_status == 13){//Trang thai giao dich =4 la thanh toan truc tiep = 13 la thanh toan an toan
-  if ( intval($pay_amount) != 50000 )
+  if ( intval($pay_amount) != 50000 || $merchant_id != 19359 )
   {
     echo '<script> alert("Phát hiện lừa đảo !!!!") && window.cation="http://lab.hoangdoan.io:8080"  </script>';
     exit();
