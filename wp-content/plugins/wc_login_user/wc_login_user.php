@@ -21,6 +21,10 @@ function wc_create_table()
       name varchar(255) DEFAULT NULL,
       myMoney int(11) DEFAULT NULL,
       myEmail varchar(255) DEFAULT NULL,
+
+      startDate timestamp DEFAULT CURRENT_TIMESTAMP,
+      endDate timestamp DEFAULT CURRENT_TIMESTAMP,
+      
       UNIQUE KEY id (id_user)
     );";
 
@@ -105,10 +109,34 @@ function display_init()
 
 }
 function display_options()
-{
+{ 
+    global $wpdb;
+    $add_money = get_option('epaper_option_add_money');
+    if(!isset($add_money) || $add_money == ''){
+      add_option( 'epaper_option_add_money', '50000', '', 'yes' );
+    }
+
+    $limit_download = get_option('epaper_option_limit_download');
+    if(!isset($limit_download) || $limit_download == ''){
+      add_option( 'epaper_option_limit_download', '10', '', 'yes' );
+    }
+
+    $day_vip = get_option('epaper_option_day_vip');
+    if(!isset($day_vip) || $day_vip == ''){
+      add_option( 'epaper_option_day_vip', '30', '', 'yes' );
+    }
+
     if(isset($_POST['add_money'])){
       update_option( 'epaper_option_add_money', $_POST['add_money'] );
     }
+    if(isset($_POST['limit_download'])){
+      update_option( 'epaper_option_limit_download', $_POST['limit_download'] );
+    }
+    if(isset($_POST['day_vip'])){
+      update_option( 'epaper_option_day_vip', $_POST['day_vip'] );
+    }
+    
+
     render_epaper_options();
 
 }
@@ -176,6 +204,17 @@ function render_epaper_options()
             if(!isset($add_money) || $add_money == ''){
               add_option( 'epaper_option_add_money', '50000', '', 'yes' );
             }
+
+            $limit_download = get_option('epaper_option_limit_download');
+            if(!isset($limit_download) || $limit_download == ''){
+              add_option( 'epaper_option_limit_download', '10', '', 'yes' );
+            }
+
+            $day_vip = get_option('epaper_option_day_vip');
+            if(!isset($day_vip) || $day_vip == ''){
+              add_option( 'epaper_option_day_vip', '30', '', 'yes' );
+            }
+
             ?>
             <div class="clearfix"></div>
             <div class="container wrap">
@@ -186,8 +225,19 @@ function render_epaper_options()
                     <label for="name">Số tiền mỗi lần khách hàng nạp vào</label>
                     <input type="text" value="<?php echo $add_money; ?>" class="form-control" id="add_money" name="add_money">
                   </div>
+                  
+                  <div class="form-group">
+                    <label for="name">Số lần download trong 1 ngày</label>
+                    <input type="text" value="<?php echo $limit_download; ?>" class="form-control" id="limit_download" name="limit_download">
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="name">Số ngày vip</label>
+                    <input type="text" value="<?php echo $day_vip; ?>" class="form-control" id="day_vip" name="day_vip">
+                  </div>
                   <button type="submit" class="btn btn-success" name="wc-submit">Lưu thông tin</button>
                 </form>
+
             <?php
     }
 function wc_get_infor_user_detail_by_id($user_id)
@@ -227,19 +277,23 @@ function get_table_user()
             </div>
           </div>
 
+
           <div class="form-group">
-            <label class="col-sm-2 control-label">Tiền</label>
-            <div class="col-sm-10">
-              <p class="form-control-static"><?php echo $current_user->myMoney ?></p>
+            <label class="col-sm-6 control-label">Thời gian hết hạn</label>
+            <div class="col-sm-6">
+              <p class="form-control-static"><?php 
+                    if( strtotime($current_user->endDownload) <= strtotime(date('Y-m-d H:i:s'))) 
+                    { 
+                      echo "Hết hạn"; 
+                    } else 
+                    { 
+                      echo $current_user->endDownload; 
+                    } 
+              ?></p>
             </div>
           </div>
 
-          <div class="form-group">
-            <label class="col-sm-2 control-label">Số tài liệu đã tải</label>
-            <div class="col-sm-10">
-              <p class="form-control-static">23 lượt</p>
-            </div>
-          </div>
+          
         </div>
 
         <div class="row">
@@ -260,18 +314,19 @@ function get_table_user()
                     $table_name_download = $wpdb->prefix.'user_download';
 
                     $results = $wpdb->get_results("SELECT * FROM ".$table_name_download." where id_user = ".$current_user->id_user);
-
+                    $i = 0;
                     foreach ($results as $result)
                     {
 
                     ?>
                     <tr>
-                      <th scope="row">1</th>
+                      <th scope="row"><?php echo $i; ?></th>
                       <td><?php echo $results->name_product; ?></td>
                       <td><?php echo $results->downloadDate; ?></td>
                     </tr>
 
                     <?php 
+                    $i ++;
                     }
                     ?>
 
@@ -307,7 +362,15 @@ function get_table_user()
                 echo '<td><a href="#">'.$result->id_user.'</a></td>';
                 // echo '<td>'.$result->user_login.'</td>';
                 echo '<td>'.$result->myEmail.'</td>';
-                echo '<td>'.$result->myMoney.'</td>';
+                 
+                if( strtotime($result->endDownload) < strtotime(date('Y-m-d H:i:s'))) 
+                { 
+                  echo '<td>'."Hết hạn".'</td>';
+                } else 
+                { 
+                  echo '<td>'.$detailUser->endDownload.'</td>';
+                } 
+              
                 echo '</tr>';
             }
 
@@ -397,6 +460,24 @@ mBank, [0m~Pông [0m~A, VietinBank, Quân [0m~P[0m~Yi, VIB, SHB,... v[0m|  thẻ
             <label class="col-sm-2 control-label">Tiền</label>
             <div class="col-sm-10">
               <p class="form-control-static"><code><?php echo number_format($detailUser->myMoney, 0, ',', '.');?> VND</code></p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Thời hạn tải</label>
+            <div class="col-sm-10">
+              <p class="form-control-static">
+              <code>
+              <?php 
+                    if( strtotime($detailUser->endDownload) <= strtotime(date('Y-m-d H:i:s'))) 
+                    { 
+                      echo "Hết hạn ".$detailUser->endDownload; 
+                    } else 
+                    { 
+                      echo $detailUser->endDownload; 
+                    } 
+              ?>
+              </code></p>
             </div>
           </div>
 

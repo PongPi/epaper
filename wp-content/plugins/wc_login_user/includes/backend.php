@@ -129,28 +129,59 @@ class TT_Example_List_Table extends WP_List_Table {
         {
             $name = $_POST['wc-name'];
             $email = $_POST['wc-email'];
-            $money = $_POST['wc-money'];
             
-            $result = $table_detail_user = $wpdb->prefix.'user_detail';
+            $table_detail_user = $wpdb->prefix.'user_detail';
 
-            $wpdb->update( 
+            $result = $wpdb->update( 
                 $table_detail_user, 
                 array( 
                     'name' => $name,
-                    'myMoney' => $money,
                     'myEmail' => $email
                 ), 
                 array( 'id_user' => $id_user), 
                 array( 
                     '%s',
-                    '%d', 
-                    '%s'  
+                    '%s' 
                 )
             );
 
             if($result)
             {
-               echo 'Luu ket qua thanh cong';     
+               echo '<br><div class="alert alert-success" role="alert">
+      <strong>Update!</strong> Thanh cong.
+    </div>';     
+            }
+            else
+            {
+                echo 'Insert bi loi !!!!';
+            }
+        } else if(isset($_POST['wc-addday'])){
+            
+            $this->update_add_time($id_user);
+
+        } else if(isset($_POST['wc-reset'])){
+
+            
+            $NewDate = date('Y-m-d H:i:s');
+                
+            $table_detail_user = $wpdb->prefix.'user_detail';
+
+            $result = $wpdb->update( 
+                $table_detail_user, 
+                array( 
+                    'endDownload' => $NewDate
+                ), 
+                array( 'id_user' => $id_user), 
+                array( 
+                    '%s' 
+                )
+            );
+
+            if($result)
+            {
+               echo '<br><div class="alert alert-success" role="alert">
+      <strong>Reset thoi gian!</strong> Thanh cong.'.$day.'
+    </div>';     
             }
             else
             {
@@ -159,7 +190,51 @@ class TT_Example_List_Table extends WP_List_Table {
         }
     
     }
+    function update_add_time($id_user){
 
+        global $wpdb;
+        $detailUser = wc_get_infor_user_detail_by_id($id_user)[0];
+
+        $dateadd = 30;
+        $day_vip = get_option('epaper_option_day_vip');
+        if(isset($day_vip)){
+            $dateadd = intval($day_vip);
+        }
+        if( strtotime($detailUser->endDownload) < strtotime(date('Y-m-d H:i:s'))) 
+        { 
+            $day = date('Y-m-d H:i:s');
+            $NewDate = date('Y-m-d', strtotime($day . " +".$dateadd." days"));
+        } else 
+        {
+            $day = $detailUser->endDownload;
+            $NewDate = date('Y-m-d', strtotime($day . " +".$dateadd." days"));
+        }
+
+        $table_detail_user = $wpdb->prefix.'user_detail';
+
+        $result = $wpdb->update( 
+            $table_detail_user, 
+            array( 
+                'endDownload' => $NewDate
+            ), 
+            array( 'id_user' => $id_user), 
+            array( 
+                '%s' 
+            )
+        );
+
+        if($result)
+        {
+           echo '<br><div class="alert alert-success" role="alert">
+              <strong>Gia han!</strong> Thanh cong.'.$day.'
+            </div>';     
+        }
+        else
+        {
+            echo 'Insert bi loi !!!!';
+        }
+
+    }
     function get_detail_user_backend($id_user)
     {
             // Logged in.
@@ -181,7 +256,7 @@ class TT_Example_List_Table extends WP_List_Table {
             <div class="clearfix"></div>
             <div class="container wrap">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-8">
                 <form action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ); ?>" method="post" style="padding: 25px;background-color: #ECECEC;">
                   <div class="form-group">
                     <label for="name">Tên khách hàng</label>
@@ -191,11 +266,34 @@ class TT_Example_List_Table extends WP_List_Table {
                     <label for="Email">Email</label>
                     <input type="Email" value="<?php echo $currentUser->myEmail; ?>" class="form-control" id="exampleInputPassword1" placeholder="Email" name="wc-email">
                   </div>
-                  <div class="form-group">
-                    <label for="MyMoney">MyMoney</label>
-                    <input type="text" value="<?php echo $currentUser->myMoney;?>" class="form-control" id="exampleInputPassword1" placeholder="Text" name="wc-money">
+                  <div class="form-group row">
+                    <label class="col-sm-6 control-label">Thời gian hết hạn</label>
+                    <div class="col-sm-6">
+                      <p class="form-control-static"><?php 
+                            if( strtotime($currentUser->endDownload) <= strtotime(date('Y-m-d H:i:s'))) 
+                            { 
+                              echo "Hết hạn"; 
+                            } else 
+                            { 
+                              echo $currentUser->endDownload; 
+                            } 
+                      ?></p>
+                    </div>
                   </div>
-                  <button type="submit" class="btn btn-success" name="wc-submit">Lưu thông tin</button>
+                  <br>
+                  <div class="form-group">
+                  <div class="col-sm-6"><button type="submit" class="btn btn-danger" name="wc-addday">Cộng thêm 30 ngày sử dụng</button>
+                  </div>
+                  <div class="col-sm-3">
+                        
+                        <button type="submit" class="btn btn-success" name="wc-reset">Reset thời gian</button>
+                    </div>
+                  <div class="col-sm-3">
+                        
+                        <button type="submit" class="btn btn-success" name="wc-submit">Lưu thông tin</button>
+                    </div>
+                  </div>
+                  <br>
                 </form>
 
               

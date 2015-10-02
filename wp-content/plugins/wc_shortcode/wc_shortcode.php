@@ -55,7 +55,7 @@ function wc_create_button_dowload()
 						// }
 
 					} else {
-						 echo '<h3>Xin vui lòng nạp thêm tiền vài tài khoản.</h3>';
+						 echo '<h3>Xin vui bạn hết lượt tải trong ngày hoặc tài khoản hết hạn.</h3>';
 					}
 
 				} else {
@@ -92,22 +92,32 @@ function check_user()
 	$results = wc_get_infor_user_detail($user_id);
 
 	$myMoney = intval($results[0]->myMoney);
-	if(wc_get_infor_user_download($user_id,$id_product))
-	{
-		return true;
-	}
-	if($myMoney >= $pirce)
-	{
-		//Tru tien
-		$myMoney = $myMoney - $pirce;
-		wc_update_user_detail($myMoney,$user_id);
-		wc_add_detail_dowload($user_id,$id_product,$name_product);
+	// if(wc_get_infor_user_download($user_id,$id_product))
+	// {
+	// 	return true;
+	// }
+	$count = wc_get_count_user_download($user_id);
+	$limit = get_option('epaper_option_limit_download');
 
-		return true;
+	if( strtotime($results[0]->endDownload) > strtotime(date('Y-m-d H:i:s'))) 
+	{
+		if($count <= $limit){
+			//Tru tien
+			//$myMoney = $myMoney - $pirce;
+			//wc_update_user_detail($myMoney,$user_id);
+			wc_add_detail_dowload($user_id,$id_product,$name_product);
+
+			return true;
+		} else {
+			echo 'Một ngày bạn chỉ được tải '.$limit.' tài liệu';
+			return false;
+		}
+		
 
 	}
 	else
 	{
+		echo 'Tài khoản hết ';
 		return false;
 	}
 }
@@ -119,6 +129,16 @@ function wc_get_infor_user_detail($user_id)
     return $results;
 
 }
+
+function wc_get_count_user_download($user_id)
+{
+	global $wpdb;
+    $table_name = $wpdb->prefix.'user_detail';
+    $results = $wpdb->get_results("SELECT count(*) as count FROM ep_user_download WHERE id_user = ".$user_id." and DAY(downloadDate) = DAY(NOW()) and MONTH(downloadDate) = MONTH(NOW()) and YEAR(downloadDate) = YEAR(NOW())");
+    return $results[0]->count;
+
+}
+
 function wc_get_infor_user_download($user_id,$id_product)
 {
 	global $wpdb;
