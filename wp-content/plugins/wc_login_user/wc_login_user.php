@@ -143,6 +143,11 @@ function display_options()
       update_option( 'epaper_option_email_baokim', $_POST['email_baokim'] );
     }
 
+    if(isset($_POST['merchant_id'])){
+      update_option( 'epaper_option_merchant_id_baokim', $_POST['merchant_id'] );
+    }
+    
+
     render_epaper_options();
 
 }
@@ -223,6 +228,7 @@ function render_epaper_options()
 
             $email_paypal = get_option('epaper_option_email_paypal');
             $email_baokim = get_option('epaper_option_email_baokim');
+            $merchant_id = get_option('epaper_option_merchant_id_baokim');
 
 
             ?>
@@ -256,6 +262,12 @@ function render_epaper_options()
                     <input type="text" value="<?php echo $email_baokim; ?>" class="form-control" id="email_baokim" name="email_baokim">
                   </div>
 
+                  <div class="form-group">
+                    <label for="name">Merchant ID Bao kim</label>
+                    <input type="text" value="<?php echo $merchant_id; ?>" class="form-control" id="merchant_id" name="merchant_id">
+                  </div>
+
+                  
                   <button type="submit" class="btn btn-success" name="wc-submit">Lưu thông tin</button>
                 </form>
 
@@ -474,13 +486,6 @@ mBank, [0m~Pông [0m~A, VietinBank, Quân [0m~P[0m~Yi, VIB, SHB,... v[0m|  thẻ
             <label class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
               <p class="form-control-static"><code><?php echo $detailUser->myEmail; ?></code></p>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="col-sm-2 control-label">Tiền</label>
-            <div class="col-sm-10">
-              <p class="form-control-static"><code><?php echo number_format($detailUser->myMoney, 0, ',', '.');?> VND</code></p>
             </div>
           </div>
 
