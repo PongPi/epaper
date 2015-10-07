@@ -66,7 +66,8 @@ function Paypal_return()
 
   $payment_gross = $keyarray['payment_gross'];
   $receiver_email = $keyarray['receiver_email'];
-  if ( $payment_gross != "6.00" || $receiver_email != "dthoang92-facilitator@gmail.com")
+  $email_paypal = get_option('epaper_option_email_paypal');
+  if ( $payment_gross != "6.00" || $receiver_email != $email_paypal)
   {
     echo '<script> alert("Phát hiện lừa đảo !!!!") && window.location="htab.hoangdoan.io:8080"  </script>';
     exit();
