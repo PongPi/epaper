@@ -46,11 +46,12 @@ if($result != '' && strstr($result,'VERIFIED') && $status==200){
 	$customer_address = $_POST['customer_address'];
 	$pay_amount = $_POST['net_amount'];
 	$merchant_id = $_POST['merchant_id'];
+	$my_merchant = get_option('epaper_option_merchant_id_baokim');
 	//...
 	
 	//kiem tra trang thai giao dich
 if ($transaction_status == 4||$transaction_status == 13){//Trang thai giao dich =4 la thanh toan truc tiep = 13 la thanh toan an toan
-  if ( intval($pay_amount) != 50000 || $merchant_id != 19359 )
+  if ( intval($pay_amount) != 50000 || $merchant_id != $my_merchant )
   {
     echo '<script> alert("Phát hiện lừa đảo !!!!") && window.cation="http://lab.hoangdoan.io:8080"  </script>';
     exit();
