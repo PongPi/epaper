@@ -136,6 +136,12 @@ function display_options()
       update_option( 'epaper_option_day_vip', $_POST['day_vip'] );
     }
     
+    if(isset($_POST['email_paypal'])){
+      update_option( 'epaper_option_email_paypal', $_POST['email_paypal'] );
+    }
+    if(isset($_POST['email_baokim'])){
+      update_option( 'epaper_option_email_baokim', $_POST['email_baokim'] );
+    }
 
     render_epaper_options();
 
@@ -215,6 +221,10 @@ function render_epaper_options()
               add_option( 'epaper_option_day_vip', '30', '', 'yes' );
             }
 
+            $email_paypal = get_option('epaper_option_email_paypal');
+            $email_baokim = get_option('epaper_option_email_baokim');
+
+
             ?>
             <div class="clearfix"></div>
             <div class="container wrap">
@@ -235,6 +245,17 @@ function render_epaper_options()
                     <label for="name">Số ngày vip</label>
                     <input type="text" value="<?php echo $day_vip; ?>" class="form-control" id="day_vip" name="day_vip">
                   </div>
+
+                  <div class="form-group">
+                    <label for="name">Email Paypal</label>
+                    <input type="text" value="<?php echo $email_paypal; ?>" class="form-control" id="email_paypal" name="email_paypal">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="name">Email Bao kim</label>
+                    <input type="text" value="<?php echo $email_baokim; ?>" class="form-control" id="email_baokim" name="email_baokim">
+                  </div>
+
                   <button type="submit" class="btn btn-success" name="wc-submit">Lưu thông tin</button>
                 </form>
 
