@@ -427,7 +427,7 @@ function get_detail_user(){
 
         <div class="col-sm-3">
           <form action="https://baokim.vn/payment/product/version11" method="get" target="_blank">
-          <input type="hidden" name="business" value="<?php echo $email_baokim; ?>">
+          <input type="hidden" name="business" value="<?php echo get_option('epaper_option_email_baokim'); ?>">
           <input type="hidden" name="product_name" value="booking">
           <input type="hidden" name="product_price" value="50000">
           <input type="hidden" name="product_quantity" value="1">
@@ -443,7 +443,7 @@ mBank, [0m~Pông [0m~A, VietinBank, Quân [0m~P[0m~Yi, VIB, SHB,... v[0m|  thẻ
 	  <br></br>
 	  <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
 	  <input type="hidden" name="cmd" value="_xclick">
-	  <input type="hidden" name="business" value="<?php echo $email_paypal; ?>">
+	  <input type="hidden" name="business" value="<?php echo get_option('epaper_option_email_paypal'); ?>">
 	  <input type="hidden" name="lc" value="VN">
 	  <input type="hidden" name="item_name" value=<?php echo $current_user->user_email; ?>>
 	  <input type="hidden" name="amount" value="6.00">
