@@ -146,6 +146,11 @@ function display_options()
     if(isset($_POST['merchant_id'])){
       update_option( 'epaper_option_merchant_id_baokim', $_POST['merchant_id'] );
     }
+
+    if(isset($_POST['money_for_download'])){
+      update_option( 'epaper_option_money_for_download', $_POST['money_for_download'] );
+    }
+    
     
 
     render_epaper_options();
@@ -216,15 +221,20 @@ function render_epaper_options()
               add_option( 'epaper_option_add_money', '50000', '', 'yes' );
             }
 
-            $limit_download = get_option('epaper_option_limit_download');
-            if(!isset($limit_download) || $limit_download == ''){
-              add_option( 'epaper_option_limit_download', '10', '', 'yes' );
+            $money_for_download = get_option('epaper_option_money_for_download');
+            if(!isset($money_for_download) || $money_for_download == ''){
+              add_option( 'epaper_option_money_for_download', '5000', '', 'yes' );
             }
 
-            $day_vip = get_option('epaper_option_day_vip');
-            if(!isset($day_vip) || $day_vip == ''){
-              add_option( 'epaper_option_day_vip', '30', '', 'yes' );
-            }
+            // $limit_download = get_option('epaper_option_limit_download');
+            // if(!isset($limit_download) || $limit_download == ''){
+            //   add_option( 'epaper_option_limit_download', '10', '', 'yes' );
+            // }
+
+            // $day_vip = get_option('epaper_option_day_vip');
+            // if(!isset($day_vip) || $day_vip == ''){
+            //   add_option( 'epaper_option_day_vip', '30', '', 'yes' );
+            // }
 
             $email_paypal = get_option('epaper_option_email_paypal');
             $email_baokim = get_option('epaper_option_email_baokim');
@@ -241,16 +251,21 @@ function render_epaper_options()
                     <label for="name">Số tiền mỗi lần khách hàng nạp vào</label>
                     <input type="text" value="<?php echo $add_money; ?>" class="form-control" id="add_money" name="add_money">
                   </div>
-                  
+
                   <div class="form-group">
+                    <label for="name">Số tiền cho mỗi lượt </label>
+                    <input type="text" value="<?php echo $money_for_download; ?>" class="form-control" id="money_for_download" name="money_for_download">
+                  </div>
+                  
+                  <!--<div class="form-group">
                     <label for="name">Số lần download trong 1 ngày</label>
                     <input type="text" value="<?php echo $limit_download; ?>" class="form-control" id="limit_download" name="limit_download">
-                  </div>
+                  </div>-->
                   
-                  <div class="form-group">
+                  <!--<div class="form-group">
                     <label for="name">Số ngày vip</label>
                     <input type="text" value="<?php echo $day_vip; ?>" class="form-control" id="day_vip" name="day_vip">
-                  </div>
+                  </div>-->
 
                   <div class="form-group">
                     <label for="name">Email Paypal</label>
@@ -310,23 +325,6 @@ function get_table_user()
             </div>
           </div>
 
-
-          <div class="form-group">
-            <label class="col-sm-6 control-label">Thời gian hết hạn</label>
-            <div class="col-sm-6">
-              <p class="form-control-static"><?php 
-                    if( strtotime($current_user->endDownload) <= strtotime(date('Y-m-d H:i:s'))) 
-                    { 
-                      echo "Hết hạn"; 
-                    } else 
-                    { 
-                      echo $current_user->endDownload; 
-                    } 
-              ?></p>
-            </div>
-          </div>
-
-          
         </div>
 
         <div class="row">

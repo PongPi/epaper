@@ -83,7 +83,9 @@ function check_user()
 {
 	global $product;
 
-	$pirce = intval($product->regular_price);
+	//$pirce = intval($product->regular_price);
+	$price = get_option('epaper_option_money_for_download');
+
 	$id_product = $product->id;
 	$name_product = $product->post->post_title;
 	
@@ -99,25 +101,18 @@ function check_user()
 	$count = wc_get_count_user_download($user_id);
 	$limit = get_option('epaper_option_limit_download');
 
-	if( strtotime($results[0]->endDownload) > strtotime(date('Y-m-d H:i:s'))) 
+	if( $myMoney > $price) 
 	{
-		if($count <= $limit){
-			//Tru tien
-			//$myMoney = $myMoney - $pirce;
-			//wc_update_user_detail($myMoney,$user_id);
-			wc_add_detail_dowload($user_id,$id_product,$name_product);
+		//Tru tien
+		$myMoney = $myMoney - $price;
+		wc_update_user_detail($myMoney,$user_id);
+		wc_add_detail_dowload($user_id,$id_product,$name_product);
 
-			return true;
-		} else {
-			echo 'Một ngày bạn chỉ được tải '.$limit.' tài liệu';
-			return false;
-		}
-		
-
+		return true;
 	}
 	else
 	{
-		echo 'Tài khoản hết ';
+		echo 'Tài khoản không đủ tiền.';
 		return false;
 	}
 }
