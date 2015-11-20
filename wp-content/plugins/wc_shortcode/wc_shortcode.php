@@ -7,7 +7,7 @@ Author: TrungTran - Duc Nguyen
 Version: 1.0
 Author URI: None
 */
-add_action('woocommerce_single_product_summary','wc_html_button_dowbload',11);
+add_action('woocommerce_single_product_summary','wc_create_button_dowload',11);
 
 function wc_create_button_dowload()
 {
@@ -69,7 +69,7 @@ function wc_create_button_dowload()
 	}
 	else
 	{
-		echo '<a class="btn btn-success" href="'.get_permalink(2790).'" role="button">DOWNLOAD</a>';
+		echo '<a class="btn btn-success" href="/my-account" role="button">DOWNLOAD</a>';
 	}
 }
 	

@@ -60,22 +60,20 @@ function wc_add_id_user($user_id)
 	global $wpdb;
 	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
-    $id = $user_id;
+  $id = $user_id;
 
-    $name = $_POST["email"];
-    $myMoney = 0;
-    $myEmail = $_POST["email"];
+  $name = $_POST["email"];
+  $myMoney = 0;
+  $myEmail = $_POST["email"];
 
-    $table_name = $wpdb->prefix.'user_detail';
+  $table_name = $wpdb->prefix.'user_detail';
 
-    //hàm Insert vào data base
-    $result = $wpdb->insert(
-        $table_name,
-        array('id_user'=>$id,'name'=>$name,'myEmail'=>$myEmail,'myMoney'=>$myMoney),
-        array('%d','%s', '%s', '%s')
-    );
-    
-
+  //hàm Insert vào data base
+  $result = $wpdb->insert(
+      $table_name,
+      array('id_user'=>$id,'name'=>$name,'myEmail'=>$myEmail,'myMoney'=>$myMoney),
+      array('%d','%s', '%s', '%s')
+  );
 }
 //Hook vào hành động regíter
 add_action('user_register','wc_add_id_user');
@@ -314,7 +312,6 @@ function get_table_user()
             <label class="col-sm-2 control-label">Name</label>
             <div class="col-sm-10">
               <p class="form-control-static"><?php echo $current_user->name ?></p>
-              <a href="<?php echo wp_logout_url( $logout_redirect_page ); ?>" title="<?php _e('Logout','lwa');?>">Thoát</a>
             </div>
           </div>
 
@@ -433,6 +430,14 @@ function get_detail_user(){
 
         ?>
         <br>
+        <style type="text/css">
+          .woocommerce{
+            display: none;
+          }
+          #content{
+            padding: 55px;
+          }
+        </style>
         <div id="user-info">
 
         <div class="col-sm-3">
@@ -475,8 +480,6 @@ mBank, [0m~Pông [0m~A, VietinBank, Quân [0m~P[0m~Yi, VIB, SHB,... v[0m|  thẻ
             <label class="col-sm-2 control-label">Name</label>
             <div class="col-sm-10">
               <p class="form-control-static"><code><?php echo $current_user->user_login ?></code></p>
-              <a class="btn btn-danger" href="<?php echo wp_logout_url( $logout_redirect_page ); ?>" title="<?php _e('Logout','lwa');?>">Thoát</a>
-                -  <a  class="btn btn-info"  href="<?php echo wc_customer_edit_account_url(); ?>" title="<?php _e('Logout','lwa');?>">Chỉnh sửa</a>
             </div>
           </div>
 
@@ -484,24 +487,6 @@ mBank, [0m~Pông [0m~A, VietinBank, Quân [0m~P[0m~Yi, VIB, SHB,... v[0m|  thẻ
             <label class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
               <p class="form-control-static"><code><?php echo $detailUser->myEmail; ?></code></p>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="col-sm-2 control-label">Thời hạn tải</label>
-            <div class="col-sm-10">
-              <p class="form-control-static">
-              <code>
-              <?php 
-                    if( strtotime($detailUser->endDownload) <= strtotime(date('Y-m-d H:i:s'))) 
-                    { 
-                      echo "Hết hạn ".$detailUser->endDownload; 
-                    } else 
-                    { 
-                      echo $detailUser->endDownload; 
-                    } 
-              ?>
-              </code></p>
             </div>
           </div>
 
