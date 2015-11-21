@@ -33,17 +33,39 @@ function wc_create_button_dowload()
 
 			        <div class="form-group">
 					  <label for="usr">Email:</label>
-					  <input type="text" class="form-control" id="email" name="email">
+					  <input type="text" class="form-control" id="email" name="email" onchange="myEmail()">
 					</div>
+					<script type="text/javascript">
+						function myEmail(){
+							var email = document.getElementById('email').value;
+							if(email.split('@').length == 2){
 
+								var a = document.getElementById("baokim_link");
+								a.className = "btn btn-success";
+
+								var b = document.getElementById("paypal_link");
+								b.className = "btn btn-success";
+
+								document.getElementById("baokim_link").href = document.getElementById("baokim_link").href + "&email=" + email; 
+								document.getElementById("paypal_link").href = document.getElementById("paypal_link").href + "&email=" + email;
+
+							} else {
+								var a = document.getElementById("baokim_link");
+								a.className = "disabled btn btn-success";
+
+								var b = document.getElementById("paypal_link");
+								b.className = "disabled btn btn-success";
+							}
+						}
+					</script>
 					<div class="form-group">
 					  <label for="usr" style="min-width: 250px;">Thanh toán bằng Bảo Kim  </label>
-					  <button type="button" class="btn btn-success" style="min-width: 250px;">Bảo Kim</button>
+					  <a id="baokim_link" href="#" class="disabled btn btn-success" style="min-width: 250px;">Bảo Kim</a>
 					</div>
 
 					<div class="form-group">
 					  <label for="usr" style="min-width: 250px;">Thanh toán bằng PayPal    </label>
-					  <button type="button" class="btn btn-success" style="min-width: 250px;">PayPal</button>
+					  <a id="paypal_link" href="#" class="disabled btn btn-success" style="min-width: 250px;">PayPal</a>
 					</div>
 
 
