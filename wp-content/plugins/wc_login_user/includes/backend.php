@@ -129,6 +129,7 @@ class TT_Example_List_Table extends WP_List_Table {
         {
             $name = $_POST['wc-name'];
             $email = $_POST['wc-email'];
+            $money = $_POST['wc-myMoney'];
             
             $table_detail_user = $wpdb->prefix.'user_detail';
 
@@ -136,12 +137,14 @@ class TT_Example_List_Table extends WP_List_Table {
                 $table_detail_user, 
                 array( 
                     'name' => $name,
-                    'myEmail' => $email
+                    'myEmail' => $email,
+                    'myMoney' => $money
                 ), 
                 array( 'id_user' => $id_user), 
                 array( 
                     '%s',
-                    '%s' 
+                    '%s',
+                    '%s'
                 )
             );
 
@@ -266,28 +269,13 @@ class TT_Example_List_Table extends WP_List_Table {
                     <label for="Email">Email</label>
                     <input type="Email" value="<?php echo $currentUser->myEmail; ?>" class="form-control" id="exampleInputPassword1" placeholder="Email" name="wc-email">
                   </div>
-                  <div class="form-group row">
-                    <label class="col-sm-6 control-label">Thời gian hết hạn</label>
-                    <div class="col-sm-6">
-                      <p class="form-control-static"><?php 
-                            if( strtotime($currentUser->endDownload) <= strtotime(date('Y-m-d H:i:s'))) 
-                            { 
-                              echo "Hết hạn"; 
-                            } else 
-                            { 
-                              echo $currentUser->endDownload; 
-                            } 
-                      ?></p>
-                    </div>
-                  </div>
-                  <br>
+
                   <div class="form-group">
-                  <div class="col-sm-6"><button type="submit" class="btn btn-danger" name="wc-addday">Cộng thêm 30 ngày sử dụng</button>
+                    <label for="myMoney">Số Tiền</label>
+                    <input type="myMoney" value="<?php echo $currentUser->myMoney; ?>" class="form-control" id="exampleInputPassword1" placeholder="myMoney" name="wc-myMoney">
                   </div>
-                  <div class="col-sm-3">
-                        
-                        <button type="submit" class="btn btn-success" name="wc-reset">Reset thời gian</button>
-                    </div>
+                  
+                  <br>
                   <div class="col-sm-3">
                         
                         <button type="submit" class="btn btn-success" name="wc-submit">Lưu thông tin</button>
@@ -335,6 +323,11 @@ class TT_Example_List_Table extends WP_List_Table {
                 </div>
             </div>
             <div class="clearfix"></div>
+            <style type="text/css">
+                #wpfooter{
+                    position: inherit;
+                }
+            </style>
                      <?php
             } else {
                 echo "Không tìm thấy khách hàng.";

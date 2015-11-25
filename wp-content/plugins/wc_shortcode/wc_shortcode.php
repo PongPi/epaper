@@ -61,6 +61,22 @@ function wc_create_button_dowload()
 					<div class="form-group">
 					  <label for="usr" style="min-width: 250px;">Thanh toán bằng Bảo Kim  </label>
 					  <a id="baokim_link" href="#" class="disabled btn btn-success" style="min-width: 250px;">Bảo Kim</a>
+
+					  <form action="https://baokim.vn/payment/product/version11" method="get" target="_blank">
+				          <input type="hidden" name="business" value="">
+				          <input type="hidden" name="product_name" value="booking">
+				          <input type="hidden" name="product_price" value="5000">
+				          <input type="hidden" name="product_quantity" value="1">
+				          <input type="hidden" name="total_amount" value="5000">
+				          <input type="hidden" name="url_detail" value="lab.hoangdoan.io:8080">
+				          <input type="hidden" name="url_success" value="http://lab.hoangdoan.io:8080/baokim.php">
+				          <input type="hidden" name="url_cancel" value="http://lab.hoangdoan.io:8080/my-account">
+				          <input type="hidden" name="order_description" value="">
+				          <input type="hidden" name="id" value="">
+				          <input type="image" src="http://www.baokim.vn/developers/uploads/baokim_btn/thanhtoan-l.png" border="0" name="submit" alt="Thanh toán an to[0m| n v[0m~[i Bảo Kim !" title="Thanh toán trực tuyến an to[0m| n dùng t[0m| i khoản Ngân h[0m| ng (VietcomBank, Techcoo
+				mBank, [0m~Pông [0m~A, VietinBank, Quân [0m~P[0m~Yi, VIB, SHB,... v[0m|  thẻ Qu[0m~Qc tế (Visa, Master Card...) qua C[0m~Ung thanh toán �c tuyến BảoKim.vn">
+					</form>
+
 					</div>
 
 					<div class="form-group">
