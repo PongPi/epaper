@@ -11,7 +11,7 @@ add_action('woocommerce_single_product_summary','wc_create_button_dowload',11);
 
 function wc_create_button_dowload()
 {	
-
+	global $product;
 	?>
 	<style type="text/css">
 		.modal-backdrop{
@@ -60,8 +60,8 @@ function wc_create_button_dowload()
 					</script>
 					<div class="form-group">
 					  <label for="usr" style="min-width: 250px;">Thanh toán bằng Bảo Kim  </label>
-					  <a id="baokim_link" href="#" class="disabled btn btn-success" style="min-width: 250px;">Bảo Kim</a>
-
+					  <a id="baokim_link" href="/thanhtoan/index.php?id=<?=$product->id?>&price=<?=$product->price?>" class="disabled btn btn-success" style="min-width: 250px;">Bảo Kim</a>
+					  
 					  <form action="https://baokim.vn/payment/product/version11" method="get" target="_blank">
 				          <input type="hidden" name="business" value="">
 				          <input type="hidden" name="product_name" value="booking">
@@ -99,7 +99,7 @@ function wc_create_button_dowload()
 	
 	if(is_user_logged_in())
 	{
-		global $product;
+		
 		//echo var_dump($product);
 		//echo get_permalink();
 		wc_html_button_dowbload();

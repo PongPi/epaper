@@ -1,8 +1,8 @@
 <?php
 //CẤU HÌNH TÀI KHOẢN (Configure account)
 define('EMAIL_BUSINESS','nguyenduc1222@gmail.com');//Email Bảo kim
-define('MERCHANT_ID','19984');                // Mã website tích hợp
-define('SECURE_PASS','52b4cf302631f93d');   // Mật khẩu
+define('MERCHANT_ID','20106');                // Mã website tích hợp
+define('SECURE_PASS','1407ca8010925ef2');   // Mật khẩu
 
 // Cấu hình tài khoản tích hợp
 define('API_USER','epapercom');  //API USER

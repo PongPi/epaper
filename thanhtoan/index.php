@@ -52,7 +52,7 @@ $banks = $baokim->get_seller_info();
 							<dt>Địa chỉ:</dt>
 							<dd><input type="text" name="address"></dd>
 							<dt>Số tiền thanh toán:</dt>
-							<dd><input id="total_amount" type="text" name="total_amount"></dd>
+							<dd><input id="total_amount" type="text" name="total_amount" disabled value="<?=$_GET["price"]?>"></dd>
 						</dl>
 					</div>
 				</div>
