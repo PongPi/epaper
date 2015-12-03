@@ -44,6 +44,7 @@ function wc_create_table_order_now()
       email varchar(255) DEFAULT NULL,
       orderId varchar(255) DEFAULT NULL,
       productId varchar(255) DEFAULT NULL,
+      status varchar(255) DEFAULT 'Chua thanh toan',
       orderTimeDate timestamp DEFAULT CURRENT_TIMESTAMP,
       UNIQUE KEY id (id)
     );";

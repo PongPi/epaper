@@ -14,7 +14,6 @@ add_action('woocommerce_single_product_summary','wc_create_button_dowload',11);
 function wc_create_button_dowload()
 {	
 	global $product;
-	var_dump($_POST);
 	?>
 	<style type="text/css">
 		.modal-backdrop{
@@ -53,40 +52,27 @@ function wc_create_button_dowload()
 						    return false;
 						}
 
-						var posting = $.post( "/order.php", { email: email, productId: "<?=$product->id?>" } );
+						var posting = $.post( "/order.php", { email: email, productId: "<?=$product->id?>", productName:  "<?=$product->post->post_title?>"} );
  
 						// Put the results in a div
 						posting.done(function( data ) {
-						  $('#oderId').val(data);	
-						  var href = $('#baokim_link').attr('href');
-						  href = href + "&id=" + data;
-						  $('#baokim_link').attr('href',href);
+						  $("#linkBaoKim").html("<a href='" + data + "'><img src='http://www.baokim.vn/developers/uploads/baokim_btn/muahang-s.png' alt='Thanh toán an toàn với Bảo Kim !' border='0' title='Thanh toán trực tuyến an toàn dùng tài khoản Ngân hàng (VietcomBank, TechcomBank, Đông Á, VietinBank, Quân Đội, VIB, SHB,... và thẻ Quốc tế (Visa, Master Card...) qua Cổng thanh toán trực tuyến BảoKim.vn' ></a>")
 						});
 
 					};
 				</script>
-				
-				<div class="form-group">
-					<label for="oderId">Order ID:</label>
-					<input type="text" class="form-control" id="oderId">
-				</div>
+			
 
-				<div class="form-group">
+					<div class="form-group">
 					<?php
 						$actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 					?>
 					  <label for="usr" style="min-width: 250px;">Thanh toán bằng Bảo Kim  </label>
-					  <a id="baokim_link" class="disabled" href="http://kiemthu.baokim.vn/payment/product/version11?business=dev.baokim@bk.vn&order_description=<?=$product->id?>&product_name=<?=$product->post->post_title?>&product_price=<?=$product->price?>&product_quantity=1&total_amount=<?=$product->price?>&url_cancel=<?=$actual_link?>&url_detail=<?=$actual_link?>&url_success=<?=$actual_link?>"><img src="http://www.baokim.vn/developers/uploads/baokim_btn/muahang-s.png" alt="Thanh toán an toàn với Bảo Kim !" border="0" title="Thanh toán trực tuyến an toàn dùng tài khoản Ngân hàng (VietcomBank, TechcomBank, Đông Á, VietinBank, Quân Đội, VIB, SHB,... và thẻ Quốc tế (Visa, Master Card...) qua Cổng thanh toán trực tuyến BảoKim.vn" ></a>
-					</div>
-
-					<div class="form-group">
-					  <label for="usr" style="min-width: 250px;">Thanh toán bằng PayPal    </label>
-					  <a id="paypal_link" href="#" class="disabled btn btn-success" style="min-width: 250px;">PayPal</a>
+					  <div id="linkBaoKim"></div>
 					</div>
 
 		        </div>
 		        <div class="modal-footer">
-		        	
 		         	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 		        </div>
 		      </div>

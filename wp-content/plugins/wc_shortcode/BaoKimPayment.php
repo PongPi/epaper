@@ -16,10 +16,10 @@ class BaoKimPayment
 	private $baokim_url = 'https://www.baokim.vn/payment/customize_payment/order';
 
 	// Mã merchante site 
-	private $merchant_id = '20106';	// Biến này được baokim.vn cung cấp khi bạn đăng ký merchant site
+	private $merchant_id = '647';	// Biến này được baokim.vn cung cấp khi bạn đăng ký merchant site
 
 	// Mật khẩu bảo mật
-	private $secure_pass = '1407ca8010925ef2'; // Biến này được baokim.vn cung cấp khi bạn đăng ký merchant site
+	private $secure_pass = 'ae543c080ad91c23'; // Biến này được baokim.vn cung cấp khi bạn đăng ký merchant site
 
 	/**
 	 * Hàm xây dựng url chuyển đến BaoKim.vn thực hiện thanh toán, trong đó có tham số mã hóa (còn gọi là public key)

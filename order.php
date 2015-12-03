@@ -1,5 +1,5 @@
 ﻿<?php
-
+include('BaoKimPayment.php');
 require_once('./wp-config.php');
 global $wpdb;
 $table_name = $wpdb->prefix.'order_now';
@@ -17,8 +17,30 @@ if(isset($_POST["email"]))
         array('%s', '%s', '%s')
     );
 
+    $product_name = $_POST['productName'];
 
-	echo $orderId;
+    $bk = new BaoKimPayment();
+
+    $order_id = $orderId;
+
+    $business = 'nguyenduc1222@gmail.com';
+
+    $total_amount = 5000;
+
+    $shipping_fee = 0;
+
+    $tax_fee = 0;
+
+    $order_description = $product_name;
+
+    $url_success = '#';
+
+    $url_cancel = '#';
+
+    $url_detail = '#';
+
+    echo $bk->createRequestUrl($order_id, $business, $total_amount, $shipping_fee, $tax_fee, $order_description, $url_success, $url_cancel, $url_detail);
+
 }
 
 function createRandomOrderId() { 
