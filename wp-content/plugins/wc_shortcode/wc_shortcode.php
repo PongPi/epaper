@@ -9,9 +9,12 @@ Author URI: None
 */
 add_action('woocommerce_single_product_summary','wc_create_button_dowload',11);
 
+
+
 function wc_create_button_dowload()
 {	
 	global $product;
+	var_dump($_POST);
 	?>
 	<style type="text/css">
 		.modal-backdrop{
@@ -21,7 +24,7 @@ function wc_create_button_dowload()
 	<button type="button" style="margin-bottom: 15px;" class="btn btn-success" data-toggle="modal" data-target="#myModal">DOWNLOAD NGAY</button>
 	<!-- Modal -->
 		<div class="fancybox-wrap fancybox-desktop fancybox-type-ajax fancybox-opened modal fade" id="myModal" role="dialog">
-		    <div class="modal-dialog" style="z-index: 1;">
+		    <div class="modal-dialog" style="z-index: 1;width: 550px;">
 		    
 		      <!-- Modal content-->
 		      <div class="modal-content">
@@ -31,52 +34,49 @@ function wc_create_button_dowload()
 		        </div>
 		        <div class="modal-body">
 
-			        <div class="form-group">
-					  <label for="usr">Email:</label>
-					  <input type="text" class="form-control" id="email" name="email" onchange="myEmail()">
-					</div>
-					<script type="text/javascript">
-						function myEmail(){
-							var email = document.getElementById('email').value;
-							if(email.split('@').length == 2){
+	        	<div class="form-group">
+					<label for="email">Email address:</label>
+					<input type="email" class="form-control" id="email">
+				</div>
 
-								var a = document.getElementById("baokim_link");
-								a.className = "btn btn-success";
+				<button type="button" class="btn btn-default" onclick="getOrderId()">Thanh Toán</button>
+				<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+				<script type="text/javascript">
+					function getOrderId ()
+					{
 
-								var b = document.getElementById("paypal_link");
-								b.className = "btn btn-success";
-
-								document.getElementById("baokim_link").href = document.getElementById("baokim_link").href + "&email=" + email; 
-								document.getElementById("paypal_link").href = document.getElementById("paypal_link").href + "&email=" + email;
-
-							} else {
-								var a = document.getElementById("baokim_link");
-								a.className = "disabled btn btn-success";
-
-								var b = document.getElementById("paypal_link");
-								b.className = "disabled btn btn-success";
-							}
+						var email = document.getElementById('email').value;
+						var re = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm;
+						if (email == '' || !re.test(email))
+						{
+						    alert('Please enter a valid email address.');
+						    return false;
 						}
-					</script>
-					<div class="form-group">
-					  <label for="usr" style="min-width: 250px;">Thanh toán bằng Bảo Kim  </label>
-					  <a id="baokim_link" href="/thanhtoan/index.php?id=<?=$product->id?>&price=<?=$product->price?>" class="disabled btn btn-success" style="min-width: 250px;">Bảo Kim</a>
-					  
-					  <form action="https://baokim.vn/payment/product/version11" method="get" target="_blank">
-				          <input type="hidden" name="business" value="">
-				          <input type="hidden" name="product_name" value="booking">
-				          <input type="hidden" name="product_price" value="5000">
-				          <input type="hidden" name="product_quantity" value="1">
-				          <input type="hidden" name="total_amount" value="5000">
-				          <input type="hidden" name="url_detail" value="lab.hoangdoan.io:8080">
-				          <input type="hidden" name="url_success" value="http://lab.hoangdoan.io:8080/baokim.php">
-				          <input type="hidden" name="url_cancel" value="http://lab.hoangdoan.io:8080/my-account">
-				          <input type="hidden" name="order_description" value="">
-				          <input type="hidden" name="id" value="">
-				          <input type="image" src="http://www.baokim.vn/developers/uploads/baokim_btn/thanhtoan-l.png" border="0" name="submit" alt="Thanh toán an to[0m| n v[0m~[i Bảo Kim !" title="Thanh toán trực tuyến an to[0m| n dùng t[0m| i khoản Ngân h[0m| ng (VietcomBank, Techcoo
-				mBank, [0m~Pông [0m~A, VietinBank, Quân [0m~P[0m~Yi, VIB, SHB,... v[0m|  thẻ Qu[0m~Qc tế (Visa, Master Card...) qua C[0m~Ung thanh toán �c tuyến BảoKim.vn">
-					</form>
 
+						var posting = $.post( "/order.php", { email: email, productId: "<?=$product->id?>" } );
+ 
+						// Put the results in a div
+						posting.done(function( data ) {
+						  $('#oderId').val(data);	
+						  var href = $('#baokim_link').attr('href');
+						  href = href + "&id=" + data;
+						  $('#baokim_link').attr('href',href);
+						});
+
+					};
+				</script>
+				
+				<div class="form-group">
+					<label for="oderId">Order ID:</label>
+					<input type="text" class="form-control" id="oderId">
+				</div>
+
+				<div class="form-group">
+					<?php
+						$actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+					?>
+					  <label for="usr" style="min-width: 250px;">Thanh toán bằng Bảo Kim  </label>
+					  <a id="baokim_link" class="disabled" href="http://kiemthu.baokim.vn/payment/product/version11?business=dev.baokim@bk.vn&order_description=<?=$product->id?>&product_name=<?=$product->post->post_title?>&product_price=<?=$product->price?>&product_quantity=1&total_amount=<?=$product->price?>&url_cancel=<?=$actual_link?>&url_detail=<?=$actual_link?>&url_success=<?=$actual_link?>"><img src="http://www.baokim.vn/developers/uploads/baokim_btn/muahang-s.png" alt="Thanh toán an toàn với Bảo Kim !" border="0" title="Thanh toán trực tuyến an toàn dùng tài khoản Ngân hàng (VietcomBank, TechcomBank, Đông Á, VietinBank, Quân Đội, VIB, SHB,... và thẻ Quốc tế (Visa, Master Card...) qua Cổng thanh toán trực tuyến BảoKim.vn" ></a>
 					</div>
 
 					<div class="form-group">
@@ -84,16 +84,17 @@ function wc_create_button_dowload()
 					  <a id="paypal_link" href="#" class="disabled btn btn-success" style="min-width: 250px;">PayPal</a>
 					</div>
 
-
 		        </div>
 		        <div class="modal-footer">
-		          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        	
+		         	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 		        </div>
 		      </div>
 		      
 		    </div>
 		</div>
 	
+
 
 	<?
 	

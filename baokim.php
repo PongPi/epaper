@@ -58,7 +58,7 @@ if ($transaction_status == 4||$transaction_status == 13){//Trang thai giao dich 
   }
   $user_id = get_current_user_id();
   global $wpdb;
-  $table_name = $wpdb->prefix.'user_detail'; 
+  $table_name = $wpdb->prefix.'user_detail';
   $results = $wpdb->get_results("SELECT * FROM ".$table_name." WHERE id_user = '".$user_id."'");  
   $myMoney = intval($results[0]->myMoney);
   $myMoney = $myMoney + intval($pay_amount) ;

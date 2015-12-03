@@ -31,6 +31,25 @@ function wc_create_table()
     dbDelta($sql);
 
 }
+
+function wc_create_table_order_now() 
+{
+  global $wpdb;
+  require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+
+  $table_name = $wpdb->prefix.'order_now';
+
+  $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+      id int(11) NOT NULL AUTO_INCREMENT,
+      email varchar(255) DEFAULT NULL,
+      orderId varchar(255) DEFAULT NULL,
+      productId varchar(255) DEFAULT NULL,
+      orderTimeDate timestamp DEFAULT CURRENT_TIMESTAMP,
+      UNIQUE KEY id (id)
+    );";
+    dbDelta($sql);
+}
+
 function wc_create_table_download() 
 {
   global $wpdb;
@@ -53,6 +72,7 @@ function wc_create_table_download()
 
 register_activation_hook( __FILE__, 'wc_create_table' );
 register_activation_hook( __FILE__, 'wc_create_table_download' );
+register_activation_hook( __FILE__, 'wc_create_table_order_now' );
 
 //Ham insert id user vào dữ liệu vào data base
 function wc_add_id_user($user_id)
